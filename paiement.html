@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VanEtape — Paiement sécurisé</title>
+<script src="https://js.stripe.com/v3/"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:  #1E3A2F;
+    --moss:    #2E5C3E;
+    --fern:    #4A7C59;
+    --gold:    #C9913A;
+    --honey:   #E8B55A;
+    --cream:   #F5EFE0;
+    --bark:    #3D2B1F;
+    --fog:     #D4CCBC;
+    --white:   #FDFAF4;
+    --error:   #C0392B;
+    --success: #2E7D52;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--bark); min-height: 100vh; }
+
+  /* NAV */
+  nav {
+    background: var(--forest); padding: 18px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(201,145,58,0.2);
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--honey); text-decoration: none; }
+  .logo span { color: var(--white); }
+  .nav-secure { display: flex; align-items: center; gap: 8px; color: var(--fog); font-size: 0.82rem; }
+
+  /* STEPS */
+  .steps-bar { background: var(--white); border-bottom: 1px solid var(--fog); padding: 0 48px; display: flex; justify-content: center; }
+  .steps { display: flex; align-items: center; max-width: 600px; width: 100%; padding: 20px 0; }
+  .step-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 500; color: var(--fog); flex: 1; }
+  .step-item.active { color: var(--forest); }
+  .step-item.done { color: var(--fern); }
+  .step-dot { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--fog); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; background: var(--white); transition: all 0.3s; }
+  .step-item.active .step-dot { border-color: var(--forest); background: var(--forest); color: var(--white); }
+  .step-item.done .step-dot { border-color: var(--fern); background: var(--fern); color: var(--white); }
+  .step-line { flex: 1; height: 2px; background: var(--fog); margin: 0 8px; }
+  .step-line.done { background: var(--fern); }
+
+  /* LAYOUT */
+  .page-wrapper { max-width: 1100px; margin: 0 auto; padding: 48px 24px; display: grid; grid-template-columns: 1fr 420px; gap: 36px; align-items: start; }
+
+  /* SUMMARY */
+  .summary-card { background: var(--white); border-radius: 20px; overflow: hidden; border: 1px solid var(--fog); position: sticky; top: 24px; }
+  .summary-img { height: 180px; overflow: hidden; position: relative; }
+  .summary-img img { width: 100%; height: 100%; object-fit: cover; }
+  .summary-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(30,58,47,0.7), transparent); }
+  .summary-tag { position: absolute; top: 14px; left: 14px; background: var(--gold); color: var(--white); padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
+  .summary-body { padding: 24px; }
+  .summary-van-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--forest); margin-bottom: 4px; }
+  .summary-location { font-size: 0.82rem; color: var(--fern); margin-bottom: 20px; }
+  .summary-dates { background: var(--cream); border-radius: 12px; padding: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .date-block label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: #7a8c7e; display: block; margin-bottom: 4px; }
+  .date-block span { font-size: 0.9rem; font-weight: 500; color: var(--forest); }
+  .summary-divider { border: none; border-top: 1px solid var(--fog); margin: 16px 0; }
+  .price-row { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 10px; }
+  .price-row span:first-child { color: #5a6b5e; }
+  .price-row span:last-child { color: var(--bark); font-weight: 500; }
+  .price-row.fee span:last-child { color: #8a9a8e; }
+  .price-row.total { margin-top: 6px; padding-top: 14px; border-top: 2px solid var(--forest); }
+  .price-row.total span:first-child { font-size: 1rem; font-weight: 600; color: var(--forest); }
+  .price-row.total span:last-child { font-size: 1.2rem; font-weight: 700; color: var(--forest); font-family: 'Playfair Display', serif; }
+  .vanetape-commission { margin-top: 14px; background: rgba(74,124,89,0.08); border: 1px solid rgba(74,124,89,0.2); border-radius: 10px; padding: 12px; font-size: 0.78rem; color: var(--fern); line-height: 1.5; text-align: center; }
+
+  /* FORM */
+  .payment-section { display: flex; flex-direction: column; gap: 24px; }
+  .card-box { background: var(--white); border-radius: 20px; padding: 32px; border: 1px solid var(--fog); }
+  .card-box h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--forest); margin-bottom: 6px; }
+  .card-box .subtitle { font-size: 0.85rem; color: #7a8c7e; margin-bottom: 28px; }
+  .form-group { margin-bottom: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: block; font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; color: var(--forest); margin-bottom: 8px; }
+  input[type="text"], input[type="email"] {
+    width: 100%; padding: 14px 16px; border: 1.5px solid var(--fog); border-radius: 12px;
+    background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--bark);
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(30,58,47,0.1); }
+
+  /* Stripe Element container */
+  .stripe-element-wrap {
+    padding: 14px 16px;
+    border: 1.5px solid var(--fog);
+    border-radius: 12px;
+    background: var(--white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .stripe-element-wrap.focused { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(30,58,47,0.1); }
+  .stripe-element-wrap.error { border-color: var(--error); }
+  .stripe-element-wrap.complete { border-color: var(--fern); }
+
+  #stripe-card-number, #stripe-card-expiry, #stripe-card-cvc { height: 22px; }
+
+  /* Stripe logos */
+  .stripe-brand-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .stripe-logo {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.78rem; color: #7a8c7e;
+  }
+  .card-logos { display: flex; gap: 8px; }
+  .card-logo { width: 40px; height: 26px; border-radius: 4px; border: 1px solid var(--fog); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+
+  /* Error message */
+  #stripe-error {
+    display: none; background: #fdf0f0; border: 1px solid #f5c6c6;
+    border-radius: 10px; padding: 12px 16px;
+    color: var(--error); font-size: 0.85rem;
+    margin-bottom: 16px; align-items: center; gap: 8px;
+  }
+  #stripe-error.show { display: flex; }
+
+  /* Security */
+  .security-strip { display: flex; align-items: center; gap: 20px; padding: 16px 20px; background: rgba(74,124,89,0.06); border-radius: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .security-item { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: #5a7a5e; }
+
+  .powered-stripe { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: #8a9a8e; margin-top: 10px; justify-content: center; }
+  .stripe-badge { background: #635BFF; color: white; font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px; }
+
+  /* Pay button */
+  .pay-btn {
+    width: 100%; padding: 18px; background: var(--forest); color: var(--white);
+    border: none; border-radius: 14px; font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem; font-weight: 600; cursor: pointer; letter-spacing: 0.5px;
+    transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .pay-btn:hover:not(:disabled) { background: var(--moss); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(30,58,47,0.3); }
+  .pay-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+  .spinner { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top-color: var(--white); border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+  .pay-btn.loading .spinner { display: block; }
+
+  /* CONFIRMATION */
+  #confirmationScreen { display: none; max-width: 640px; margin: 60px auto; text-align: center; padding: 0 24px; }
+  .confirm-card { background: var(--white); border-radius: 24px; padding: 56px 48px; border: 1px solid var(--fog); box-shadow: 0 20px 60px rgba(30,58,47,0.1); }
+  .confirm-icon { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--success), #1a5c38); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 28px; box-shadow: 0 8px 30px rgba(46,125,82,0.35); animation: popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both; }
+  .confirm-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--forest); margin-bottom: 12px; }
+  .confirm-sub { color: #5a6b5e; font-size: 0.95rem; line-height: 1.6; margin-bottom: 28px; }
+  .confirm-ref { background: var(--cream); border-radius: 12px; padding: 14px 24px; display: inline-block; margin-bottom: 28px; font-family: 'Courier New', monospace; font-size: 1.1rem; color: var(--forest); font-weight: 700; letter-spacing: 2px; }
+  .confirm-details { background: var(--cream); border-radius: 16px; padding: 24px; margin-bottom: 28px; text-align: left; }
+  .confirm-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.88rem; }
+  .confirm-row:last-child { margin-bottom: 0; }
+  .confirm-row span:first-child { color: #7a8c7e; }
+  .confirm-row span:last-child { font-weight: 500; color: var(--forest); }
+  .confirm-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-confirm-primary { background: var(--gold); color: var(--white); padding: 14px 32px; border-radius: 50px; font-size: 0.95rem; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-block; }
+  .btn-confirm-primary:hover { background: var(--honey); color: var(--bark); }
+  .btn-confirm-secondary { background: transparent; color: var(--forest); padding: 14px 32px; border-radius: 50px; font-size: 0.95rem; border: 1.5px solid var(--fog); cursor: pointer; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 860px) {
+    .page-wrapper { grid-template-columns: 1fr; }
+    .summary-card { position: static; }
+    nav { padding: 16px 20px; }
+    .card-box { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="vanetape.html" class="logo">Van<span>Etape</span></a>
+  <div class="nav-secure">🔒 Paiement sécurisé par Stripe</div>
+</nav>
+
+<div class="steps-bar">
+  <div class="steps">
+    <div class="step-item done"><div class="step-dot">✓</div><span>Sélection</span></div>
+    <div class="step-line done"></div>
+    <div class="step-item active"><div class="step-dot">2</div><span>Paiement</span></div>
+    <div class="step-line" id="line3"></div>
+    <div class="step-item" id="step3"><div class="step-dot">3</div><span>Confirmation</span></div>
+  </div>
+</div>
+
+<div class="page-wrapper" id="mainContent">
+
+  <!-- GAUCHE : FORMULAIRE -->
+  <div class="payment-section">
+
+    <!-- Coordonnées -->
+    <div class="card-box">
+      <h2>Vos coordonnées</h2>
+      <p class="subtitle">Pour recevoir votre confirmation de réservation</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" id="firstName" placeholder="Marie">
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" id="lastName" placeholder="Dupont">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Adresse e-mail</label>
+        <input type="email" id="email" placeholder="marie@exemple.fr">
+        <div id="emailError" style="display:none; color:var(--error); font-size:0.78rem; margin-top:4px;">E-mail invalide</div>
+      </div>
+      <div class="form-group">
+        <label>Téléphone</label>
+        <input type="text" id="phone" placeholder="+33 6 12 34 56 78">
+      </div>
+    </div>
+
+    <!-- Paiement Stripe -->
+    <div class="card-box">
+      <h2>Paiement sécurisé</h2>
+      <p class="subtitle">Vos données bancaires sont chiffrées et traitées par Stripe. VanEtape ne voit jamais votre numéro de carte.</p>
+
+      <div class="stripe-brand-row">
+        <div class="stripe-logo">
+          <span class="stripe-badge">stripe</span>
+          <span>Paiement sécurisé</span>
+        </div>
+        <div class="card-logos">
+          <div class="card-logo">💳</div>
+          <div class="card-logo" style="font-size:0.7rem; font-weight:700; color:#1A1F71;">VISA</div>
+          <div class="card-logo" style="font-size:0.65rem; font-weight:700; color:#EB001B;">MC</div>
+          <div class="card-logo" style="font-size:0.6rem; font-weight:700; color:#007BC1;">AMEX</div>
+        </div>
+      </div>
+
+      <!-- Numéro de carte -->
+      <div class="form-group">
+        <label>Numéro de carte</label>
+        <div class="stripe-element-wrap" id="wrap-number">
+          <div id="stripe-card-number"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date d'expiration</label>
+          <div class="stripe-element-wrap" id="wrap-expiry">
+            <div id="stripe-card-expiry"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Code CVV</label>
+          <div class="stripe-element-wrap" id="wrap-cvc">
+            <div id="stripe-card-cvc"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message d'erreur Stripe -->
+      <div id="stripe-error">
+        <span>⚠️</span>
+        <span id="stripe-error-msg">Une erreur est survenue.</span>
+      </div>
+
+      <!-- Sécurité -->
+      <div class="security-strip">
+        <div class="security-item">🔒 SSL 256-bit</div>
+        <div class="security-item">🛡️ 3D Secure</div>
+        <div class="security-item">✅ Certifié PCI-DSS</div>
+        <div class="security-item">🔐 Données chiffrées</div>
+      </div>
+
+      <!-- Bouton -->
+      <button class="pay-btn" id="payBtn" onclick="handlePayment()">
+        <div class="spinner" id="spinner"></div>
+        <span id="btnText">🔒 &nbsp;Payer 52,50 € maintenant</span>
+      </button>
+
+      <div class="powered-stripe">
+        <span>Propulsé par</span>
+        <span class="stripe-badge">stripe</span>
+        <span>— Vos données ne transitent jamais par VanEtape</span>
+      </div>
+
+      <p style="text-align:center; font-size:0.75rem; color:#8a9a8e; margin-top:14px; line-height:1.6;">
+        En confirmant, vous acceptez les <a href="#" style="color:var(--fern);">CGU de VanEtape</a>.<br>
+        Le propriétaire est notifié immédiatement après le paiement.
+      </p>
+    </div>
+  </div>
+
+  <!-- DROITE : RÉCAP -->
+  <div>
+    <div class="summary-card">
+      <div class="summary-img">
+        <img src="https://images.unsplash.com/photo-1594495894542-a46cc73e081a?w=600&q=80" alt="Van">
+        <div class="summary-overlay"></div>
+        <div class="summary-tag">Van aménagé</div>
+      </div>
+      <div class="summary-body">
+        <div class="summary-van-name">Volkswagen T6 — Cosy & tout équipé</div>
+        <div class="summary-location">📍 Lyon, Auvergne-Rhône-Alpes · Hôte : Laurent M.</div>
+        <div class="summary-dates">
+          <div class="date-block"><label>Arrivée</label><span>Jeu. 12 juin 2025</span></div>
+          <div class="date-block"><label>Départ</label><span>Ven. 13 juin 2025</span></div>
+        </div>
+        <div class="price-row"><span>50,00 € × 1 nuit</span><span>50,00 €</span></div>
+        <div class="price-row fee"><span>Frais de service (5%)</span><span>+ 2,50 €</span></div>
+        <hr class="summary-divider">
+        <div class="price-row total"><span>Total</span><span>52,50 €</span></div>
+        <div class="vanetape-commission">🤝 <strong>5% seulement</strong> — Le propriétaire reçoit <strong>47,50 €</strong></div>
+      </div>
+    </div>
+
+    <div style="background:var(--white); border-radius:16px; padding:20px; margin-top:16px; border:1px solid var(--fog);">
+      <div style="font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; color:var(--fern); margin-bottom:12px;">Votre hôte</div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:46px; height:46px; border-radius:50%; background:var(--moss); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--white);">L</div>
+        <div>
+          <div style="font-weight:500; color:var(--forest);">Laurent M.</div>
+          <div style="font-size:0.8rem; color:var(--fern);">★ 4.9 · 42 avis</div>
+        </div>
+        <div style="margin-left:auto; text-align:right;">
+          <div style="font-size:0.72rem; color:#8a9a8e;">Répond en</div>
+          <div style="font-size:0.82rem; font-weight:500; color:var(--forest);">&lt; 1 heure</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:rgba(74,124,89,0.06); border:1px solid rgba(74,124,89,0.2); border-radius:14px; padding:16px 20px; margin-top:16px;">
+      <div style="font-size:0.82rem; color:var(--fern); font-weight:500; margin-bottom:4px;">🔄 Annulation gratuite</div>
+      <div style="font-size:0.8rem; color:#5a7a5e; line-height:1.5;">Jusqu'à 24h avant l'arrivée. Au-delà, la nuit est due.</div>
+    </div>
+  </div>
+
+</div><!-- end page-wrapper -->
+
+<!-- CONFIRMATION -->
+<div id="confirmationScreen">
+  <div class="confirm-card" style="animation: fadeUp 0.5s ease both;">
+    <div class="confirm-icon">✅</div>
+    <h2 class="confirm-title">Paiement confirmé !</h2>
+    <p class="confirm-sub">Stripe a validé votre paiement. Laurent M. a été notifié et vous contactera dans l'heure.<br>Un reçu vous a été envoyé par e-mail.</p>
+    <div class="confirm-ref" id="bookingRef">VESC-2025-XXXXX</div>
+    <div class="confirm-details">
+      <div class="confirm-row"><span>Van</span><span>Volkswagen T6 Cosy</span></div>
+      <div class="confirm-row"><span>Propriétaire</span><span>Laurent M.</span></div>
+      <div class="confirm-row"><span>Lieu</span><span>Lyon, Rhône-Alpes</span></div>
+      <div class="confirm-row"><span>Arrivée</span><span>Jeu. 12 juin 2025</span></div>
+      <div class="confirm-row"><span>Départ</span><span>Ven. 13 juin 2025</span></div>
+      <hr style="border:none; border-top:1px solid var(--fog); margin:10px 0;">
+      <div class="confirm-row" style="font-weight:600;"><span>Total débité</span><span style="color:var(--forest);">52,50 €</span></div>
+    </div>
+    <div class="confirm-actions">
+      <a href="vanetape.html" class="btn-confirm-primary">🏠 Retour à l'accueil</a>
+      <button class="btn-confirm-secondary" onclick="window.print()">🖨️ Imprimer le reçu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// ⚠️  REMPLACE cette clé par ta clé PUBLIQUE Stripe (pk_live_...)
+//     Récupère-la sur : https://dashboard.stripe.com/apikeys
+// ════════════════════════════════════════════════════════════
+const STRIPE_PUBLIC_KEY = 'pk_test_51TUBc8JhRk8O8arpaHKNhf7x3scVFXNFI8ki3Ott7g4yEuVzx2C56wN2H1tDJjRvb400T00zQ7wcKR4x1LaBFpn900tXI7oOqF';
+
+const stripe = Stripe(STRIPE_PUBLIC_KEY);
+const elements = stripe.elements({
+  fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&display=swap' }]
+});
+
+// Style des champs Stripe (s'intègre au design VanEtape)
+const stripeStyle = {
+  base: {
+    fontFamily: 'DM Sans, sans-serif',
+    fontSize: '16px',
+    color: '#3D2B1F',
+    '::placeholder': { color: '#D4CCBC' },
+    iconColor: '#4A7C59',
+  },
+  invalid: { color: '#C0392B', iconColor: '#C0392B' },
+  complete: { color: '#2E5C3E', iconColor: '#2E5C3E' },
+};
+
+// Création des éléments Stripe
+const cardNumber  = elements.create('cardNumber',  { style: stripeStyle, showIcon: true });
+const cardExpiry  = elements.create('cardExpiry',  { style: stripeStyle });
+const cardCvc     = elements.create('cardCvc',     { style: stripeStyle });
+
+cardNumber.mount('#stripe-card-number');
+cardExpiry.mount('#stripe-card-expiry');
+cardCvc.mount('#stripe-card-cvc');
+
+// Gestion focus / erreur / complet sur chaque champ
+function bindElement(el, wrapId) {
+  const wrap = document.getElementById(wrapId);
+  el.on('focus',    () => wrap.classList.add('focused'));
+  el.on('blur',     () => wrap.classList.remove('focused'));
+  el.on('change', (e) => {
+    wrap.classList.toggle('error',    !!e.error);
+    wrap.classList.toggle('complete', !!e.complete);
+    if (e.error) showError(e.error.message);
+    else hideError();
+  });
+}
+bindElement(cardNumber, 'wrap-number');
+bindElement(cardExpiry, 'wrap-expiry');
+bindElement(cardCvc,    'wrap-cvc');
+
+function showError(msg) {
+  document.getElementById('stripe-error-msg').textContent = msg;
+  document.getElementById('stripe-error').classList.add('show');
+}
+function hideError() {
+  document.getElementById('stripe-error').classList.remove('show');
+}
+
+// ── Validation basique du formulaire ──
+function validateForm() {
+  const email = document.getElementById('email').value;
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  document.getElementById('emailError').style.display = emailOk ? 'none' : 'block';
+  if (!emailOk) { showError('Veuillez saisir une adresse e-mail valide.'); return false; }
+  if (!document.getElementById('firstName').value.trim()) { showError('Veuillez saisir votre prénom.'); return false; }
+  hideError();
+  return true;
+}
+
+// ── Démarrer le paiement ──
+async function handlePayment() {
+  if (!validateForm()) return;
+
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  document.getElementById('spinner').style.display = 'block';
+  document.getElementById('btnText').textContent = 'Traitement en cours…';
+
+  try {
+    // ── ÉTAPE 1 : Demande un PaymentIntent à ton serveur ──
+    // Ton serveur crée un PaymentIntent Stripe et renvoie le client_secret
+    const response = await fetch('https://vanetape-production.up.railway.app/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: 5250,          // 52,50 € en centimes
+        currency: 'eur',
+        customer_email: document.getElementById('email').value,
+        booking_id: 'VESC-' + Date.now(),
+        van_name: 'Volkswagen T6 Cosy',
+        owner: 'Laurent M.',
+      })
+    });
+    const { clientSecret, bookingRef } = await response.json();
+
+    // ── ÉTAPE 2 : Stripe confirme le paiement ──
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardNumber,
+        billing_details: {
+          name: `${document.getElementById('firstName').value} ${document.getElementById('lastName').value}`,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+        }
+      }
+    });
+
+    if (error) {
+      // Erreur Stripe (carte refusée, fonds insuffisants, etc.)
+      showError(error.message);
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('btnText').textContent = '🔒  Payer 52,50 € maintenant';
+    } else if (paymentIntent.status === 'succeeded') {
+      // ✅ Paiement réussi !
+      showConfirmation(bookingRef || 'VESC-' + Math.floor(10000 + Math.random() * 90000));
+    }
+
+  } catch (err) {
+    // Erreur réseau ou serveur
+    showError('Impossible de contacter le serveur. Vérifiez votre connexion.');
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('btnText').textContent = '🔒  Payer 52,50 € maintenant';
+  }
+}
+
+function showConfirmation(ref) {
+  document.getElementById('bookingRef').textContent = ref;
+  document.getElementById('mainContent').style.display = 'none';
+  document.getElementById('confirmationScreen').style.display = 'block';
+  document.getElementById('step3').classList.add('active');
+  document.getElementById('line3').classList.add('done');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
