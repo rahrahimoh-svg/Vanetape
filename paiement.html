@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VanEtape — Paiement sécurisé</title>
+<title>VanEscale — Paiement sécurisé</title>
 <script src="https://js.stripe.com/v3/"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -69,7 +69,7 @@
   .price-row.total { margin-top: 6px; padding-top: 14px; border-top: 2px solid var(--forest); }
   .price-row.total span:first-child { font-size: 1rem; font-weight: 600; color: var(--forest); }
   .price-row.total span:last-child { font-size: 1.2rem; font-weight: 700; color: var(--forest); font-family: 'Playfair Display', serif; }
-  .vanetape-commission { margin-top: 14px; background: rgba(74,124,89,0.08); border: 1px solid rgba(74,124,89,0.2); border-radius: 10px; padding: 12px; font-size: 0.78rem; color: var(--fern); line-height: 1.5; text-align: center; }
+  .vanescale-commission { margin-top: 14px; background: rgba(74,124,89,0.08); border: 1px solid rgba(74,124,89,0.2); border-radius: 10px; padding: 12px; font-size: 0.78rem; color: var(--fern); line-height: 1.5; text-align: center; }
 
   /* FORM */
   .payment-section { display: flex; flex-direction: column; gap: 24px; }
@@ -172,7 +172,7 @@
 <body>
 
 <nav>
-  <a href="vanetape.html" class="logo">Van<span>Etape</span></a>
+  <a href="vanescale.html" class="logo">Van<span>Escale</span></a>
   <div class="nav-secure">🔒 Paiement sécurisé par Stripe</div>
 </nav>
 
@@ -219,7 +219,7 @@
     <!-- Paiement Stripe -->
     <div class="card-box">
       <h2>Paiement sécurisé</h2>
-      <p class="subtitle">Vos données bancaires sont chiffrées et traitées par Stripe. VanEtape ne voit jamais votre numéro de carte.</p>
+      <p class="subtitle">Vos données bancaires sont chiffrées et traitées par Stripe. VanEscale ne voit jamais votre numéro de carte.</p>
 
       <div class="stripe-brand-row">
         <div class="stripe-logo">
@@ -280,11 +280,11 @@
       <div class="powered-stripe">
         <span>Propulsé par</span>
         <span class="stripe-badge">stripe</span>
-        <span>— Vos données ne transitent jamais par VanEtape</span>
+        <span>— Vos données ne transitent jamais par VanEscale</span>
       </div>
 
       <p style="text-align:center; font-size:0.75rem; color:#8a9a8e; margin-top:14px; line-height:1.6;">
-        En confirmant, vous acceptez les <a href="#" style="color:var(--fern);">CGU de VanEtape</a>.<br>
+        En confirmant, vous acceptez les <a href="#" style="color:var(--fern);">CGU de VanEscale</a>.<br>
         Le propriétaire est notifié immédiatement après le paiement.
       </p>
     </div>
@@ -294,7 +294,7 @@
   <div>
     <div class="summary-card">
       <div class="summary-img">
-        <img src="https://images.unsplash.com/photo-1594495894542-a46cc73e081a?w=600&q=80" alt="Van">
+        <img src="https://images.unsplash.com/photo-1534214526114-0ea4d47b04f2?w=600&q=80" alt="Van">
         <div class="summary-overlay"></div>
         <div class="summary-tag">Van aménagé</div>
       </div>
@@ -309,7 +309,7 @@
         <div class="price-row fee"><span>Frais de service (5%)</span><span>+ 2,50 €</span></div>
         <hr class="summary-divider">
         <div class="price-row total"><span>Total</span><span>52,50 €</span></div>
-        <div class="vanetape-commission">🤝 <strong>5% seulement</strong> — Le propriétaire reçoit <strong>47,50 €</strong></div>
+        <div class="vanescale-commission">🤝 <strong>5% seulement</strong> — Le propriétaire reçoit <strong>47,50 €</strong></div>
       </div>
     </div>
 
@@ -353,7 +353,7 @@
       <div class="confirm-row" style="font-weight:600;"><span>Total débité</span><span style="color:var(--forest);">52,50 €</span></div>
     </div>
     <div class="confirm-actions">
-      <a href="vanetape.html" class="btn-confirm-primary">🏠 Retour à l'accueil</a>
+      <a href="vanescale.html" class="btn-confirm-primary">🏠 Retour à l'accueil</a>
       <button class="btn-confirm-secondary" onclick="window.print()">🖨️ Imprimer le reçu</button>
     </div>
   </div>
@@ -371,7 +371,7 @@ const elements = stripe.elements({
   fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&display=swap' }]
 });
 
-// Style des champs Stripe (s'intègre au design VanEtape)
+// Style des champs Stripe (s'intègre au design VanEscale)
 const stripeStyle = {
   base: {
     fontFamily: 'DM Sans, sans-serif',
