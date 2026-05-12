@@ -321,7 +321,7 @@ function toggleEquip(btn) {
 function updateSimu() {
   var prix = parseFloat(document.getElementById('prix').value) || 0;
   if (prix > 0) {
-    var comm = Math.round(prix * 0.05 * 10) / 10;
+    var brut = prix * 10; var comm = Math.round(brut * 0.05);
     var net = Math.round((prix - comm) * 10 * 10) / 10;
     document.getElementById('simuPrix').textContent = (prix * 10) + ' €';
     document.getElementById('simuComm').textContent = '- ' + (comm * 10) + ' €';
