@@ -116,7 +116,7 @@ function renderGrid(list){
   document.getElementById('count').textContent=list.length+' vans disponibles';
   grid.innerHTML=list.map(function(v){
     return '<div class="card"><div class="card-img" onclick="openDetail('+v.id+')">'+
-    '<div class="card-visual" style="background:'+v.bg+'"><div class="card-emoji">'+v.emoji+'</div>'+
+    <div class="card-visual"><img src="images/van' + (v.id) + '.jpg" style="width:100%;height:100%;object-fit:cover;"><div class="card-emoji">'+v.emoji+'</div>'+
     '<div class="card-loc" style="color:rgba(255,255,255,0.8)">'+v.location+'</div></div>'+
     '<div class="card-badge">'+getType(v.type)+'</div>'+
     '<button class="card-fav" onclick="event.stopPropagation();toggleFav('+v.id+',this)">'+(favs[v.id]?'❤️':'🤍')+'</button>'+
