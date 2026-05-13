@@ -321,7 +321,7 @@ function toggleEquip(btn) {
 function updateSimu() {
   var prix = parseFloat(document.getElementById('prix').value) || 0;
   if (prix > 0) {
-    var brut = prix * 10; var comm = Math.round(brut * 0.05);
+    var comm = Math.round(prix * 0.05 * 10) / 10;
     var net = Math.round((prix - comm) * 10 * 10) / 10;
     document.getElementById('simuPrix').textContent = (prix * 10) + ' €';
     document.getElementById('simuComm').textContent = '- ' + (comm * 10) + ' €';
@@ -381,12 +381,12 @@ function submitForm() {
   btn.textContent = 'Envoi en cours...';
 
   // Simulation envoi (2 secondes)
-  fetch("https://formspree.io/f/xojrbbzy", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prenom:prenom,nom:nom,email:email,tel:tel,type:type,modele:modele,ville:ville,prix:prix})}).then(function(){setTimeout(function() {
+  setTimeout(function() {
     var ref = 'VAN-' + Math.floor(10000 + Math.random() * 90000);
     document.getElementById('confRef').textContent = ref;
     document.getElementById('formWrapper').style.display = 'none';
     document.getElementById('confirmation').style.display = 'block';
-    window.scrollTo(0, 0);},2000);});
+    window.scrollTo(0, 0);
   }, 2000);
 }
 </script>
