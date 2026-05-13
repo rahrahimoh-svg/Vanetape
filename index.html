@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="google-site-verification" content="Ll3Qb5tpkou5_NwysFxmofcw739jpn9xBciZRMOiEcc" />n<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VanEtape - Hebergement van et camping-car</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -57,7 +57,7 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
 <div id="homePage" class="page active">
 <nav>
   <div class="logo" onclick="showPage('homePage')">Van<span>Etape</span></div>
-  <button class="nav-btn" onclick="window.location.href='proposer.html'">Proposer mon van</button>
+  <button class="nav-btn">Proposer mon van</button>
 </nav>
 <div class="filter-bar">
   <div class="chip active" onclick="filterVans(this,'all')"><span class="icon">🚐</span><span class="label">Tous</span></div>
@@ -103,7 +103,8 @@ var vans=[
 {id:3,title:'Renault Master - Vintage et chaleureux',location:'Marseille, Provence',type:'fourgon',price:29,rating:5.0,reviews:18,capacity:2,emoji:'🚚',bg:'#4A7C59',amenities:['Lit queen','Rechaud gaz','Panneau solaire','Cafe inclus','Deco vintage','Bibliotheque']},
 {id:4,title:'Mercedes Sprinter - Luxe et confort',location:'Nice, Cote Azur',type:'luxe',price:95,rating:4.9,reviews:31,capacity:2,emoji:'✨',bg:'#C9913A',amenities:['Lit king','Douche chaude','Panneau solaire','Climatisation','WiFi haut debit','Minibar']},
 {id:5,title:'Ford Transit - Aventurier des cimes',location:'Grenoble, Isere',type:'van',price:42,rating:4.7,reviews:15,capacity:2,emoji:'🏔️',bg:'#3D2B1F',amenities:['Lit double','Cuisine','Panneau solaire','Equip montagne','Porte-velos','GPS inclus']},
-{id:6,title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,emoji:'🌿',bg:'#2E5C3E',amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']}
+{id:6,title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,emoji:'🌿',bg:'#2E5C3E',amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']},
+{id:7,title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,emoji:'🚐',bg:'#1E3A2F',amenities:['3 couchages','Glaciere electrique','Proche des plages','Centre-ville Carnon','Proche festivites','Toutes commodites']}
 ];
 var favs={};
 var currentVan=null;
