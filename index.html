@@ -57,7 +57,7 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
 <div id="homePage" class="page active">
 <nav>
   <div class="logo" onclick="showPage('homePage')">Van<span>Etape</span></div>
-  <button class="nav-btn">Proposer mon van</button>
+  <a href="proposer.html" style="text-decoration:none;"><button class="nav-btn proposer-btn">🚐 Proposer mon van</button></a>
 </nav>
 <div class="filter-bar">
   <div class="chip active" onclick="filterVans(this,'all')"><span class="icon">🚐</span><span class="label">Tous</span></div>
@@ -157,3 +157,28 @@ renderGrid(vans);
 </script>
 </body>
 </html>
+
+<style>
+/* Bouton Proposer amélioré */
+.proposer-btn {
+    background: linear-gradient(135deg, #C9913A, #E8B55A);
+    color: white;
+    border: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    font-size: 0.93rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(201, 145, 58, 0.35);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.proposer-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(201, 145, 58, 0.45);
+    background: linear-gradient(135deg, #e8b55a, #f5c16e);
+}
+</style>
