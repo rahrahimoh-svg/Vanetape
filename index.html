@@ -57,8 +57,19 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
 <div id="homePage" class="page active">
 <nav>
   <div class="logo" onclick="showPage('homePage')">Van<span>Etape</span></div>
-  <button class="nav-btn" onclick="window.location.href='proposer.html'">Proposer mon van</button>
+  <button class="nav-btn">Proposer mon van</button>
 </nav>
+
+<!-- INTRO -->
+<div style="background:linear-gradient(135deg,#1E3A2F,#2E5C3E);padding:32px 24px;text-align:center;color:#FDFAF4;">
+  <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:#E8B55A;margin-bottom:12px;">Dormez autrement, payez moins 🌙</h2>
+  <p style="font-size:0.95rem;color:#D4CCBC;max-width:560px;margin:0 auto 20px;line-height:1.6;">Louez un van ou camping-car uniquement pour dormir. Une alternative abordable et originale à l'hôtel — stationné, équipé et prêt à vous accueillir pour une nuit insolite.</p>
+  <div style="width:100%;height:1px;background:rgba(255,255,255,0.15);margin:20px 0;"></div>
+  <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#E8B55A;margin-bottom:10px;">Vous avez un van ? 💰</h3>
+  <p style="font-size:0.9rem;color:#D4CCBC;max-width:500px;margin:0 auto 16px;line-height:1.6;">Rentabilisez-le sans effort ! Proposez votre van à des voyageurs de passage et gagnez jusqu'à 600€/mois. Inscription gratuite, vous gardez le contrôle.</p>
+  <button onclick="window.location.href='proposer.html'" style="background:linear-gradient(135deg,#C9913A,#E8B55A);color:white;border:none;padding:12px 28px;border-radius:50px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">🚐 Proposer mon van gratuitement</button>
+</div>
+
 <div class="filter-bar">
   <div class="chip active" onclick="filterVans(this,'all')"><span class="icon">🚐</span><span class="label">Tous</span></div>
   <div class="chip" onclick="filterVans(this,'van')"><span class="icon">🚌</span><span class="label">Vans</span></div>
@@ -98,13 +109,13 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
 </div>
 <script>
 var vans=[
-{id:1,title:'Volkswagen T6 - Cosy et tout equipe',location:'Lyon, Rhone-Alpes',type:'van',price:38,rating:4.9,reviews:42,capacity:2,img:'VAN4.jpg',bg:'#1E3A2F',amenities:['Lit double','Cuisine','Electricite','Douche','WiFi','Panneau solaire','Animaux OK','Climatisation']},
-{id:2,title:'Camping-car Fiat Ducato - Famille',location:'Bordeaux, Nouvelle-Aquitaine',type:'camping',price:55,rating:4.8,reviews:27,capacity:4,img:'VAN3.jpg',bg:'#2E5C3E',amenities:['2 lits','Cuisine equipee','WC integre','Douche','220V','Frigo','TV','Porte-velos']},
-{id:3,title:'Renault Master - Vintage et chaleureux',location:'Marseille, Provence',type:'fourgon',price:29,rating:5.0,reviews:18,capacity:2,img:'VAN2.jpg',bg:'#4A7C59',amenities:['Lit queen','Rechaud gaz','Panneau solaire','Cafe inclus','Deco vintage','Bibliotheque']},
-{id:4,title:'Mercedes Sprinter - Luxe et confort',location:'Nice, Cote Azur',type:'luxe',price:95,rating:4.9,reviews:31,capacity:2,img:'VAN1.jpg',bg:'#C9913A',amenities:['Lit king','Douche chaude','Panneau solaire','Climatisation','WiFi haut debit','Minibar']},
-{id:5,title:'Ford Transit - Aventurier des cimes',location:'Grenoble, Isere',type:'van',price:42,rating:4.7,reviews:15,capacity:2,img:'VAN4.jpg',bg:'#3D2B1F',amenities:['Lit double','Cuisine','Panneau solaire','Equip montagne','Porte-velos','GPS inclus']},
-{id:6,title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,img:'VAN2.jpg',bg:'#2E5C3E',amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']},
-{id:7,img:'VAN1.jpg',title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,img:'VAN4.jpg',bg:'#1E3A2F',amenities:['3 couchages','Glaciere electrique','Proche des plages','Centre-ville Carnon','Proche festivites','Toutes commodites']}
+{id:1,title:'Volkswagen T6 - Cosy et tout equipe',location:'Lyon, Rhone-Alpes',type:'van',price:38,rating:4.9,reviews:42,capacity:2,emoji:'🚐',bg:'#1E3A2F',amenities:['Lit double','Cuisine','Electricite','Douche','WiFi','Panneau solaire','Animaux OK','Climatisation']},
+{id:2,title:'Camping-car Fiat Ducato - Famille',location:'Bordeaux, Nouvelle-Aquitaine',type:'camping',price:55,rating:4.8,reviews:27,capacity:4,emoji:'🏕️',bg:'#2E5C3E',amenities:['2 lits','Cuisine equipee','WC integre','Douche','220V','Frigo','TV','Porte-velos']},
+{id:3,title:'Renault Master - Vintage et chaleureux',location:'Marseille, Provence',type:'fourgon',price:29,rating:5.0,reviews:18,capacity:2,emoji:'🚚',bg:'#4A7C59',amenities:['Lit queen','Rechaud gaz','Panneau solaire','Cafe inclus','Deco vintage','Bibliotheque']},
+{id:4,title:'Mercedes Sprinter - Luxe et confort',location:'Nice, Cote Azur',type:'luxe',price:95,rating:4.9,reviews:31,capacity:2,emoji:'✨',bg:'#C9913A',amenities:['Lit king','Douche chaude','Panneau solaire','Climatisation','WiFi haut debit','Minibar']},
+{id:5,title:'Ford Transit - Aventurier des cimes',location:'Grenoble, Isere',type:'van',price:42,rating:4.7,reviews:15,capacity:2,emoji:'🏔️',bg:'#3D2B1F',amenities:['Lit double','Cuisine','Panneau solaire','Equip montagne','Porte-velos','GPS inclus']},
+{id:6,title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,emoji:'🌿',bg:'#2E5C3E',amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']},
+{id:7,title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,emoji:'🚐',bg:'#1E3A2F',amenities:['3 couchages','Glaciere electrique','Proche des plages','Centre-ville Carnon','Proche festivites','Toutes commodites']}
 ];
 var favs={};
 var currentVan=null;
@@ -116,7 +127,7 @@ function renderGrid(list){
   document.getElementById('count').textContent=list.length+' vans disponibles';
   grid.innerHTML=list.map(function(v){
     return '<div class="card"><div class="card-img" onclick="openDetail('+v.id+')">'+
-    '<div class="card-visual" style="background-image:url('+v.img+');background-size:cover;background-position:center">'+
+    '<div class="card-visual" style="background:'+v.bg+'"><div class="card-emoji">'+v.emoji+'</div>'+
     '<div class="card-loc" style="color:rgba(255,255,255,0.8)">'+v.location+'</div></div>'+
     '<div class="card-badge">'+getType(v.type)+'</div>'+
     '<button class="card-fav" onclick="event.stopPropagation();toggleFav('+v.id+',this)">'+(favs[v.id]?'❤️':'🤍')+'</button>'+
