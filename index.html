@@ -6,127 +6,78 @@
 <title>VanEtape - Hébergement van et camping-car</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--forest:#1E3A2F;--moss:#2E5C3E;--fern:#4A7C59;--gold:#C9913A;--honey:#E8B55A;--cream:#F5EFE0;--bark:#3D2B1F;--fog:#D4CCBC;--white:#FDFAF4;}
+:root{--forest:#1E3A2F;--gold:#C9913A;--white:#FDFAF4;--bark:#3D2B1F;--fog:#D4CCBC;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--bark);}
-.page{display:none;} .page.active{display:block;}
-nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--fog);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 1px 12px rgba(0,0,0,0.07);}
-.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--gold);cursor:pointer;}
-.logo span{color:var(--forest);}
-.nav-btn{background:none;border:1.5px solid var(--fog);border-radius:50px;padding:8px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.85rem;}
-.filter-bar{display:flex;gap:8px;padding:12px 24px;border-bottom:1px solid var(--fog);overflow-x:auto;}
-.chip{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 16px;border-radius:50px;border:1.5px solid var(--fog);cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;background:var(--white);}
-.chip.active{border-color:var(--forest);background:var(--forest);color:var(--white);}
-.chip .icon{font-size:1.1rem;} .chip .label{font-size:0.7rem;font-weight:500;}
-.count{padding:12px 24px;font-size:0.85rem;color:#7a8c7e;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;padding:0 24px 40px;}
-.card{cursor:pointer;border-radius:16px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.08);}
-.card-img{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3;}
-.card-visual{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
-.card-emoji{font-size:3.5rem;}
-.card-loc{font-size:0.78rem;font-weight:500;text-align:center;padding:0 12px;color:rgba(255,255,255,0.9);}
-.card-badge{position:absolute;bottom:10px;left:10px;background:rgba(30,58,47,0.85);color:#E8B55A;padding:3px 10px;border-radius:50px;font-size:0.7rem;font-weight:600;}
-.card-fav{position:absolute;top:10px;right:10px;background:none;border:none;cursor:pointer;font-size:1.3rem;}
-.card-body{padding:12px;}
-.card-header{display:flex;justify-content:space-between;margin-bottom:4px;}
-.card-title{font-weight:600;font-size:0.95rem;color:var(--bark);}
-.card-rating{font-size:0.85rem;font-weight:500;}
-.card-location{font-size:0.8rem;color:#7a8c7e;margin-bottom:6px;}
-.card-price{font-size:0.95rem;} .card-price strong{font-weight:700;}
+nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--fog);padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--gold);}
+.filter-bar{display:flex;gap:8px;padding:12px 20px;border-bottom:1px solid var(--fog);overflow-x:auto;}
+.chip{padding:8px 16px;border-radius:50px;border:1.5px solid var(--fog);background:white;cursor:pointer;white-space:nowrap;font-size:0.85rem;}
+.chip.active{background:var(--forest);color:white;border-color:var(--forest);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;padding:20px;}
+.card{border-radius:16px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.1);background:white;}
+.card img{width:100%;height:220px;object-fit:cover;}
+.card-body{padding:14px;}
+.card-title{font-weight:600;margin-bottom:4px;}
+.card-location{color:#666;font-size:0.9rem;margin-bottom:8px;}
+.card-price{font-size:1.1rem;font-weight:700;color:var(--forest);}
 </style>
 </head>
 <body>
-<div id="homePage" class="page active">
+
 <nav>
-  <div class="logo" onclick="showPage('homePage')">Van<span>Etape</span></div>
-  <button class="nav-btn">Proposer mon van</button>
+  <div class="logo">Van<span>Etape</span></div>
+  <button onclick="window.location.href='proposer.html'" style="background:var(--gold);color:white;border:none;padding:10px 20px;border-radius:50px;cursor:pointer;">Proposer mon van</button>
 </nav>
 
-<!-- INTRO AMÉLIORÉE -->
-<div style="background:#0d1f17;padding:40px 20px 50px;text-align:center;color:#FDFAF4;position:relative;overflow:hidden;">
-  <div style="max-width:620px;margin:0 auto;">
-    <a href="https://www.VanEtape.fr" target="_blank" style="text-decoration:none;display:block;margin-bottom:28px;">
-      <img src="pub2.jpg" alt="Marre des hôtels hors de prix ?" style="width:100%;max-width:560px;border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,0.4);transition:transform 0.3s ease;">
-    </a>
-    <div style="width:100%;height:2px;background:linear-gradient(90deg,transparent,#E8B55A,transparent);margin:32px 0;"></div>
-    <a href="https://www.VanEtape.fr" target="_blank" style="text-decoration:none;display:block;margin-bottom:32px;">
-      <img src="pub1.jpg" alt="Ton van dort dans ton garage ?" style="width:100%;max-width:560px;border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,0.4);transition:transform 0.3s ease;">
-    </a>
-    <button onclick="window.location.href='proposer.html'" style="background:linear-gradient(135deg,#C9913A,#E8B55A);color:white;border:none;padding:16px 40px;border-radius:50px;font-size:1.05rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 6px 25px rgba(201,145,58,0.5);margin-top:10px;">
-      🚐 Proposer mon van gratuitement
-    </button>
-  </div>
+<!-- INTRO -->
+<div style="background:#0d1f17;padding:40px 20px;text-align:center;color:#FDFAF4;">
+  <a href="https://www.VanEtape.fr" target="_blank"><img src="pub2.jpg" style="max-width:560px;width:100%;border-radius:20px;margin-bottom:20px;box-shadow:0 15px 35px rgba(0,0,0,0.4);"></a>
+  <a href="https://www.VanEtape.fr" target="_blank"><img src="pub1.jpg" style="max-width:560px;width:100%;border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,0.4);"></a>
 </div>
 
 <div class="filter-bar">
-  <div class="chip active" onclick="filterVans(this,'all')"><span class="icon">🚐</span><span class="label">Tous</span></div>
-  <div class="chip" onclick="filterVans(this,'van')"><span class="icon">🚌</span><span class="label">Vans</span></div>
-  <div class="chip" onclick="filterVans(this,'camping')"><span class="icon">🏕️</span><span class="label">Camping-cars</span></div>
-  <div class="chip" onclick="filterVans(this,'fourgon')"><span class="icon">🚚</span><span class="label">Fourgons</span></div>
-  <div class="chip" onclick="filterVans(this,'luxe')"><span class="icon">✨</span><span class="label">Luxe</span></div>
-</div>
-<div class="count" id="count">7 vans disponibles</div>
-<div class="grid" id="grid"></div>
+  <div class="chip active" onclick="filter('all')">🚐 Tous</div>
+  <div class="chip" onclick="filter('van')">🚌 Vans</div>
+  <div class="chip" onclick="filter('camping')">🏕️ Camping-cars</div>
+  <div class="chip" onclick="filter('fourgon')">🚚 Fourgons</div>
 </div>
 
-<div id="detailPage" class="page">
-  <!-- Detail page content (kept minimal) -->
-</div>
+<div class="grid" id="grid"></div>
 
 <script>
-var vans = [
-  {id:1,title:'Volkswagen T6 - Cosy et tout equipe',location:'Lyon, Rhone-Alpes',type:'van',price:38,rating:4.9,reviews:42,capacity:2,emoji:'🚐',bg:'#1E3A2F'},
-  {id:2,title:'Camping-car Fiat Ducato - Famille',location:'Bordeaux, Nouvelle-Aquitaine',type:'camping',price:55,rating:4.8,reviews:27,capacity:4,emoji:'🏕️',bg:'#2E5C3E'},
-  {id:3,title:'Renault Master - Vintage et chaleureux',location:'Marseille, Provence',type:'fourgon',price:29,rating:5.0,reviews:18,capacity:2,emoji:'🚚',bg:'#4A7C59'},
-  {id:4,title:'Mercedes Sprinter - Luxe et confort',location:'Nice, Cote Azur',type:'luxe',price:95,rating:4.9,reviews:31,capacity:2,emoji:'✨',bg:'#C9913A'},
-  {id:5,title:'Ford Transit - Aventurier des cimes',location:'Grenoble, Isere',type:'van',price:42,rating:4.7,reviews:15,capacity:2,emoji:'🏔️',bg:'#3D2B1F'},
-  {id:6,title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,emoji:'🌿',bg:'#2E5C3E'},
-  {id:7,title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,emoji:'🚐',bg:'#1E3A2F'}
+const vans = [
+  {id:1, title:"Volkswagen T6", location:"Lyon", price:38, img:"van1.jpg", type:"van"},
+  {id:2, title:"Fiat Ducato Famille", location:"Bordeaux", price:55, img:"van2.jpg", type:"camping"},
+  {id:3, title:"Renault Master Vintage", location:"Marseille", price:29, img:"van3.jpg", type:"fourgon"},
+  {id:4, title:"Mercedes Sprinter Luxe", location:"Nice", price:95, img:"van4.jpg", type:"luxe"},
 ];
 
-var favs = {};
-function showPage(id){document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active');}
-function getType(t){if(t==='van') return 'Van aménagé'; if(t==='camping') return 'Camping-car'; if(t==='fourgon') return 'Fourgon'; return 'Luxe';}
-
-function renderGrid(list){
-  var grid = document.getElementById('grid');
-  document.getElementById('count').textContent = list.length + ' vans disponibles';
-  grid.innerHTML = list.map(v => `
+function renderVans(filteredVans) {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = filteredVans.map(v => `
     <div class="card">
-      <div class="card-img" onclick="openDetail(${v.id})">
-        <div class="card-visual" style="background:${v.bg}">
-          <div class="card-emoji">${v.emoji}</div>
-          <div class="card-loc">${v.location}</div>
-        </div>
-        <div class="card-badge">${getType(v.type)}</div>
-      </div>
-      <div class="card-body" onclick="openDetail(${v.id})">
-        <div class="card-header">
-          <div class="card-title">${v.title}</div>
-          <div class="card-rating">★${v.rating}</div>
-        </div>
+      <img src="${v.img}" alt="${v.title}">
+      <div class="card-body">
+        <div class="card-title">${v.title}</div>
         <div class="card-location">📍 ${v.location}</div>
-        <div class="card-price"><strong>${v.price} €</strong> / nuit</div>
+        <div class="card-price">${v.price} € / nuit</div>
       </div>
     </div>
   `).join('');
 }
 
-function filterVans(chip, type){
+function filter(type) {
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  renderGrid(type === 'all' ? vans : vans.filter(v => v.type === type));
+  if (type === 'all') {
+    renderVans(vans);
+  } else {
+    renderVans(vans.filter(v => v.type === type));
+  }
 }
 
-function openDetail(id){
-  alert("Détail du van " + id + " (à développer plus tard)");
-}
-
-renderGrid(vans);
+renderVans(vans);
 </script>
 
-<div style="text-align:center;padding:30px 20px;font-size:0.85rem;color:#7a8c7e;border-top:1px solid #D4CCBC;margin-top:40px;">
-  © 2026 VanEtape — <a href="mentions.html" style="color:#C9913A;text-decoration:none;">Mentions légales</a>
-</div>
 </body>
 </html>
