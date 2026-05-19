@@ -60,12 +60,30 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
   <button class="nav-btn">Proposer mon van</button>
 </nav>
 
-<!-- INTRO -->
-<div style="background:#0d1f17;padding:32px 24px;text-align:center;color:#FDFAF4;">
-  <img src="pub2.jpg" alt="Marre des hotels hors de prix" style="width:100%;max-width:560px;border-radius:16px;margin-bottom:24px;box-shadow:0 8px 30px rgba(0,0,0,0.3);">
-  <div style="width:100%;height:1px;background:rgba(255,255,255,0.15);margin:24px 0;max-width:560px;margin-left:auto;margin-right:auto;"></div>
-  <img src="pub1.jpg" alt="Ton van dort dans ton garage" style="width:100%;max-width:560px;border-radius:16px;margin-bottom:24px;box-shadow:0 8px 30px rgba(0,0,0,0.3);">
-  <button onclick="window.location.href='proposer.html'" style="background:linear-gradient(135deg,#C9913A,#E8B55A);color:white;border:none;padding:14px 32px;border-radius:50px;font-size:1rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 4px 20px rgba(201,145,58,0.4);">🚐 Proposer mon van gratuitement</button>
+<!-- INTRO AMÉLIORÉE -->
+<div style="background:#0d1f17;padding:40px 20px 50px;text-align:center;color:#FDFAF4;position:relative;overflow:hidden;">
+  <div style="max-width:620px;margin:0 auto;">
+    
+    <!-- Flyer 1 -->
+    <a href="https://www.VanEtape.fr" target="_blank" style="text-decoration:none;display:block;margin-bottom:28px;">
+      <img src="pub2.jpg" alt="Marre des hôtels hors de prix ?" 
+           style="width:100%;max-width:560px;border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,0.4);transition:transform 0.3s ease;">
+    </a>
+
+    <div style="width:100%;height:2px;background:linear-gradient(90deg,transparent,#E8B55A,transparent);margin:32px 0;"></div>
+
+    <!-- Flyer 2 -->
+    <a href="https://www.VanEtape.fr" target="_blank" style="text-decoration:none;display:block;margin-bottom:32px;">
+      <img src="pub1.jpg" alt="Ton van dort dans ton garage ?" 
+           style="width:100%;max-width:560px;border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,0.4);transition:transform 0.3s ease;">
+    </a>
+
+    <button onclick="window.location.href='proposer.html'" 
+            style="background:linear-gradient(135deg,#C9913A,#E8B55A);color:white;border:none;padding:16px 40px;border-radius:50px;font-size:1.05rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 6px 25px rgba(201,145,58,0.5);margin-top:10px;">
+      🚐 Proposer mon van gratuitement
+    </button>
+
+  </div>
 </div>
 
 <div class="filter-bar">
@@ -78,6 +96,8 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
 <div class="count" id="count">6 vans disponibles</div>
 <div class="grid" id="grid"></div>
 </div>
+
+<!-- Le reste du code (detailPage + script) reste identique -->
 <div id="detailPage" class="page">
 <div class="detail-nav">
   <button class="back-btn" onclick="showPage('homePage')">&#8592;</button>
@@ -105,69 +125,21 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
   </div>
 </div>
 </div>
+
 <script>
-var vans=[
-{id:1,title:'Volkswagen T6 - Cosy et tout equipe',location:'Lyon, Rhone-Alpes',type:'van',price:38,rating:4.9,reviews:42,capacity:2,emoji:'🚐',bg:'#1E3A2F',amenities:['Lit double','Cuisine','Electricite','Douche','WiFi','Panneau solaire','Animaux OK','Climatisation']},
-{id:2,title:'Camping-car Fiat Ducato - Famille',location:'Bordeaux, Nouvelle-Aquitaine',type:'camping',price:55,rating:4.8,reviews:27,capacity:4,emoji:'🏕️',bg:'#2E5C3E',amenities:['2 lits','Cuisine equipee','WC integre','Douche','220V','Frigo','TV','Porte-velos']},
-{id:3,title:'Renault Master - Vintage et chaleureux',location:'Marseille, Provence',type:'fourgon',price:29,rating:5.0,reviews:18,capacity:2,emoji:'🚚',bg:'#4A7C59',amenities:['Lit queen','Rechaud gaz','Panneau solaire','Cafe inclus','Deco vintage','Bibliotheque']},
-{id:4,title:'Mercedes Sprinter - Luxe et confort',location:'Nice, Cote Azur',type:'luxe',price:95,rating:4.9,reviews:31,capacity:2,emoji:'✨',bg:'#C9913A',amenities:['Lit king','Douche chaude','Panneau solaire','Climatisation','WiFi haut debit','Minibar']},
-{id:5,title:'Ford Transit - Aventurier des cimes',location:'Grenoble, Isere',type:'van',price:42,rating:4.7,reviews:15,capacity:2,emoji:'🏔️',bg:'#3D2B1F',amenities:['Lit double','Cuisine','Panneau solaire','Equip montagne','Porte-velos','GPS inclus']},
-{id:6,title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,emoji:'🌿',bg:'#2E5C3E',amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']},
-{id:7,title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,emoji:'🚐',bg:'#1E3A2F',amenities:['3 couchages','Glaciere electrique','Proche des plages','Centre-ville Carnon','Proche festivites','Toutes commodites']}
-];
-var favs={};
-var currentVan=null;
+var vans=[{id:1,title:'Volkswagen T6 - Cosy et tout equipe',location:'Lyon, Rhone-Alpes',type:'van',price:38,rating:4.9,reviews:42,capacity:2,emoji:'🚐',bg:'#1E3A2F',amenities:['Lit double','Cuisine','Electricite','Douche','WiFi','Panneau solaire','Animaux OK','Climatisation']},{id:2,title:'Camping-car Fiat Ducato - Famille',location:'Bordeaux, Nouvelle-Aquitaine',type:'camping',price:55,rating:4.8,reviews:27,capacity:4,emoji:'🏕️',bg:'#2E5C3E',amenities:['2 lits','Cuisine equipee','WC integre','Douche','220V','Frigo','TV','Porte-velos']},{id:3,title:'Renault Master - Vintage et chaleureux',location:'Marseille, Provence',type:'fourgon',price:29,rating:5.0,reviews:18,capacity:2,emoji:'🚚',bg:'#4A7C59',amenities:['Lit queen','Rechaud gaz','Panneau solaire','Cafe inclus','Deco vintage','Bibliotheque']},{id:4,title:'Mercedes Sprinter - Luxe et confort',location:'Nice, Cote Azur',type:'luxe',price:95,rating:4.9,reviews:31,capacity:2,emoji:'✨',bg:'#C9913A',amenities:['Lit king','Douche chaude','Panneau solaire','Climatisation','WiFi haut debit','Minibar']},{id:5,title:'Ford Transit - Aventurier des cimes',location:'Grenoble, Isere',type:'van',price:42,rating:4.7,reviews:15,capacity:2,emoji:'🏔️',bg:'#3D2B1F',amenities:['Lit double','Cuisine','Panneau solaire','Equip montagne','Porte-velos','GPS inclus']},{id:6,title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,emoji:'🌿',bg:'#2E5C3E',amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']},{id:7,title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,emoji:'🚐',bg:'#1E3A2F',amenities:['3 couchages','Glaciere electrique','Proche des plages','Centre-ville Carnon','Proche festivites','Toutes commodites']}];
+var favs={};var currentVan=null;
 function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function getType(t){if(t==='van')return 'Van amenage';if(t==='camping')return 'Camping-car';if(t==='fourgon')return 'Fourgon';return 'Luxe';}
 function toggleFav(id,btn){favs[id]=!favs[id];btn.textContent=favs[id]?'❤️':'🤍';}
-function renderGrid(list){
-  var grid=document.getElementById('grid');
-  document.getElementById('count').textContent=list.length+' vans disponibles';
-  grid.innerHTML=list.map(function(v){
-    return '<div class="card"><div class="card-img" onclick="openDetail('+v.id+')">'+
-    '<div class="card-visual" style="background:'+v.bg+'"><div class="card-emoji">'+v.emoji+'</div>'+
-    '<div class="card-loc" style="color:rgba(255,255,255,0.8)">'+v.location+'</div></div>'+
-    '<div class="card-badge">'+getType(v.type)+'</div>'+
-    '<button class="card-fav" onclick="event.stopPropagation();toggleFav('+v.id+',this)">'+(favs[v.id]?'❤️':'🤍')+'</button>'+
-    '</div><div class="card-body" onclick="openDetail('+v.id+')">'+
-    '<div class="card-header"><div class="card-title">'+v.title+'</div><div class="card-rating">&#9733;'+v.rating+'</div></div>'+
-    '<div class="card-location">📍 '+v.location+'</div>'+
-    '<div class="card-price"><strong>'+v.price+' €</strong> / nuit</div>'+
-    '</div></div>';
-  }).join('');
-}
-function filterVans(chip,type){
-  document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('active');});
-  chip.classList.add('active');
-  renderGrid(type==='all'?vans:vans.filter(function(v){return v.type===type;}));
-}
-function openDetail(id){
-  currentVan=vans.find(function(v){return v.id===id;});
-  var v=currentVan;
-  document.getElementById('detailNavTitle').textContent=v.title;
-  document.getElementById('detailHero').textContent=v.emoji;
-  document.getElementById('detailHero').style.background=v.bg;
-  document.getElementById('detailTitle').textContent=v.title;
-  document.getElementById('detailSub').textContent=getType(v.type)+' · '+v.location;
-  document.getElementById('detailRating').textContent=v.rating+' ('+v.reviews+' avis)';
-  document.getElementById('detailLocation').textContent=v.location;
-  document.getElementById('detailCapacity').textContent=v.capacity;
-  document.getElementById('widgetPrice').textContent=v.price;
-  var fee=Math.round(v.price*0.05*100)/100;
-  var total=v.price+fee;
-  document.getElementById('pbNights').textContent=v.price+' x 1 nuit';
-  document.getElementById('pbBase').textContent=v.price+' €';
-  document.getElementById('pbFee').textContent=fee.toFixed(2)+' €';
-  document.getElementById('pbTotal').textContent=total.toFixed(2)+' €';
-  document.getElementById('amenityGrid').innerHTML=v.amenities.map(function(a){return '<div class="amenity-item">✓ '+a+'</div>';}).join('');
-  showPage('detailPage');
-}
+function renderGrid(list){var grid=document.getElementById('grid');document.getElementById('count').textContent=list.length+' vans disponibles';grid.innerHTML=list.map(function(v){return '<div class="card"><div class="card-img" onclick="openDetail('+v.id+')">'+'<div class="card-visual" style="background:'+v.bg+'"><div class="card-emoji">'+v.emoji+'</div>'+'<div class="card-loc" style="color:rgba(255,255,255,0.8)">'+v.location+'</div></div>'+'<div class="card-badge">'+getType(v.type)+'</div>'+'<button class="card-fav" onclick="event.stopPropagation();toggleFav('+v.id+',this)">'+(favs[v.id]?'❤️':'🤍')+'</button>'+'</div><div class="card-body" onclick="openDetail('+v.id+')">'+'<div class="card-header"><div class="card-title">'+v.title+'</div><div class="card-rating">&#9733;'+v.rating+'</div></div>'+'<div class="card-location">📍 '+v.location+'</div>'+'<div class="card-price"><strong>'+v.price+' €</strong> / nuit</div>'+'</div></div>';}).join('');}
+function filterVans(chip,type){document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');renderGrid(type==='all'?vans:vans.filter(function(v){return v.type===type;}));}
+function openDetail(id){currentVan=vans.find(function(v){return v.id===id;});var v=currentVan;document.getElementById('detailNavTitle').textContent=v.title;document.getElementById('detailHero').textContent=v.emoji;document.getElementById('detailHero').style.background=v.bg;document.getElementById('detailTitle').textContent=v.title;document.getElementById('detailSub').textContent=getType(v.type)+' · '+v.location;document.getElementById('detailRating').textContent=v.rating+' ('+v.reviews+' avis)';document.getElementById('detailLocation').textContent=v.location;document.getElementById('detailCapacity').textContent=v.capacity;document.getElementById('widgetPrice').textContent=v.price;var fee=Math.round(v.price*0.05*100)/100;var total=v.price+fee;document.getElementById('pbNights').textContent=v.price+' x 1 nuit';document.getElementById('pbBase').textContent=v.price+' €';document.getElementById('pbFee').textContent=fee.toFixed(2)+' €';document.getElementById('pbTotal').textContent=total.toFixed(2)+' €';document.getElementById('amenityGrid').innerHTML=v.amenities.map(function(a){return '<div class="amenity-item">✓ '+a+'</div>';}).join('');showPage('detailPage');}
 renderGrid(vans);
 </script>
 
 <div style="text-align:center;padding:20px;font-size:0.8rem;color:#7a8c7e;border-top:1px solid #D4CCBC;margin-top:40px;">
   © 2026 VanEtape — <a href="mentions.html" style="color:#C9913A;text-decoration:none;">Mentions légales</a>
 </div>
-
 </body>
 </html>
