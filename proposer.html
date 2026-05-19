@@ -139,6 +139,39 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   </div>
 </div>
 
+<!-- CALCUL REVENUS + ASSURANCE -->
+<div style="max-width:700px;margin:0 auto;padding:0 24px 8px;">
+
+  <!-- Calcul revenus -->
+  <div style="background:#f0f7f0;border-radius:16px;padding:24px;margin-bottom:20px;border:1px solid #c8e0cc;">
+    <h3 style="font-family:'Playfair Display',serif;color:#1E3A2F;margin-bottom:16px;font-size:1.1rem;">💰 Comment atteindre 200€ à 600€ par mois ?</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="background:white;border-radius:12px;padding:16px;text-align:center;">
+        <div style="font-size:0.8rem;color:#7a8c7e;margin-bottom:8px;font-weight:600;">🌧️ BASSE SAISON</div>
+        <div style="font-size:0.85rem;color:#3D2B1F;line-height:1.7;">8 nuits/mois<br>× 29€/nuit<br><strong style="color:#1E3A2F;font-size:1.1rem;">= 232€/mois</strong></div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:16px;text-align:center;">
+        <div style="font-size:0.8rem;color:#7a8c7e;margin-bottom:8px;font-weight:600;">☀️ HAUTE SAISON</div>
+        <div style="font-size:0.85rem;color:#3D2B1F;line-height:1.7;">15 nuits/mois<br>× 40€/nuit<br><strong style="color:#1E3A2F;font-size:1.1rem;">= 600€/mois</strong></div>
+      </div>
+    </div>
+    <p style="font-size:0.78rem;color:#7a8c7e;margin-top:12px;text-align:center;">* Estimations basées sur les tarifs moyens des vans inscrits. Les revenus varient selon la saison et le prix fixé.</p>
+  </div>
+
+  <!-- Assurance et caution -->
+  <div style="background:#fff8ee;border-radius:16px;padding:24px;margin-bottom:24px;border:1px solid #e8c97a;">
+    <h3 style="font-family:'Playfair Display',serif;color:#1E3A2F;margin-bottom:12px;font-size:1.1rem;">🛡️ Assurance & protection</h3>
+    <p style="font-size:0.88rem;color:#3D2B1F;line-height:1.7;margin-bottom:12px;">Avant de proposer votre van, nous vous recommandons de :</p>
+    <div style="font-size:0.88rem;color:#3D2B1F;line-height:2;">
+      ✅ Vérifier que votre assurance auto couvre la mise à disposition du véhicule à des tiers<br>
+      ✅ Demander une caution au voyageur avant son arrivée (recommandé : 200€ minimum)<br>
+      ✅ Faire un état des lieux avec photos avant et après chaque séjour
+    </div>
+    <p style="font-size:0.78rem;color:#9a7a3e;margin-top:12px;">En cas de dommage, le propriétaire peut se retourner vers son assureur ou contacter VanEtape à <a href="mailto:contact@vanetape.fr" style="color:#C9913A;">contact@vanetape.fr</a> pour mediation.</p>
+  </div>
+
+</div>
+
 <!-- FORMULAIRE -->
 <div class="form-wrapper" id="formWrapper">
 
@@ -321,11 +354,12 @@ function toggleEquip(btn) {
 function updateSimu() {
   var prix = parseFloat(document.getElementById('prix').value) || 0;
   if (prix > 0) {
-    var brut = prix * 10; var comm = Math.round(brut * 0.05);
+    var brut = prix * 10;
+    var comm = Math.round(brut * 0.05);
     var net = brut - comm;
     document.getElementById('simuPrix').textContent = brut + ' €';
     document.getElementById('simuComm').textContent = '- ' + comm + ' €';
-    document.getElementById('simuNet').textContent = net.toString() + ' €';
+    document.getElementById('simuNet').textContent = net + ' €';
   } else {
     document.getElementById('simuPrix').textContent = '— €';
     document.getElementById('simuComm').textContent = '— €';
