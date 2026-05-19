@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VanEtape — FAQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#1E3A2F;--gold:#C9913A;--honey:#E8B55A;--cream:#F5EFE0;--bark:#3D2B1F;--fog:#D4CCBC;--white:#FDFAF4;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--bark);}
+nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--fog);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 1px 12px rgba(0,0,0,0.07);}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--gold);cursor:pointer;text-decoration:none;}
+.logo span{color:var(--forest);}
+.hero{background:linear-gradient(135deg,#0d1f17,#1E3A2F);padding:60px 24px;text-align:center;color:var(--white);}
+.hero h1{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--honey);margin-bottom:12px;}
+.hero p{color:rgba(255,255,255,0.8);font-size:1rem;}
+.container{max-width:760px;margin:0 auto;padding:50px 24px;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--forest);margin:40px 0 20px;padding-bottom:10px;border-bottom:2px solid var(--fog);}
+.faq-item{border:1px solid var(--fog);border-radius:14px;margin-bottom:12px;overflow:hidden;}
+.faq-question{padding:18px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:0.95rem;color:var(--bark);background:var(--white);}
+.faq-question:hover{background:var(--cream);}
+.faq-arrow{font-size:1.1rem;transition:transform 0.3s;color:var(--gold);}
+.faq-answer{display:none;padding:0 20px 18px;font-size:0.9rem;line-height:1.8;color:#5a6b5e;}
+.faq-item.open .faq-answer{display:block;}
+.faq-item.open .faq-arrow{transform:rotate(180deg);}
+.faq-item.open .faq-question{background:var(--cream);}
+.cta{background:linear-gradient(135deg,#0d1f17,#1E3A2F);border-radius:20px;padding:40px;text-align:center;margin-top:40px;}
+.cta h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--honey);margin-bottom:12px;}
+.cta p{color:rgba(255,255,255,0.8);margin-bottom:20px;font-size:0.9rem;}
+.cta-btn{background:linear-gradient(135deg,#C9913A,#E8B55A);color:white;border:none;padding:12px 28px;border-radius:50px;font-size:0.95rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+footer{text-align:center;padding:20px;font-size:0.8rem;color:#7a8c7e;border-top:1px solid var(--fog);margin-top:40px;}
+footer a{color:var(--gold);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Van<span>Etape</span></a>
+  <a href="proposer.html" style="background:linear-gradient(135deg,#C9913A,#E8B55A);color:white;border:none;padding:8px 18px;border-radius:50px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;">Proposer mon van</a>
+</nav>
+
+<div class="hero">
+  <h1>Questions fréquentes 💬</h1>
+  <p>Tout ce que tu dois savoir avant de réserver ou de proposer ton van</p>
+</div>
+
+<div class="container">
+
+  <div class="section-title">🎒 Pour les voyageurs</div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">C'est quoi exactement VanEtape ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">VanEtape est une plateforme qui te permet de dormir dans un vrai van aménagé chez un particulier, dès 29€ la nuit. Pas besoin de conduire — le van est stationné et tu y dors comme dans un hébergement insolite. C'est l'alternative parfaite aux hôtels trop chers.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Est-ce que je dois conduire le van ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">Non ! Le van est stationné chez le propriétaire ou à un emplacement fixe. Tu y dors simplement — comme dans une chambre d'hôtel, mais en version van life authentique.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Comment se passe la réservation ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">C'est simple : tu choisis ton van, tu cliques sur "Réserver", tu remplis tes coordonnées et tu paies en ligne de façon sécurisée via Stripe. Le propriétaire est notifié immédiatement et te contacte pour organiser l'arrivée.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Est-ce que le paiement est sécurisé ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">Oui. Tous les paiements sont traités par Stripe, l'un des leaders mondiaux du paiement en ligne. VanEtape ne voit jamais tes coordonnées bancaires. La connexion est chiffrée SSL.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Puis-je annuler ma réservation ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">Oui. L'annulation est gratuite jusqu'à 24h avant l'arrivée. Au-delà de ce délai, la nuit est due et ne sera pas remboursée. Pour toute demande : contact.vanetape@gmail.com</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Quels sont les frais de service ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">VanEtape prend 5% du prix de la nuit côté voyageur. Exemple : pour un van à 40€/nuit, tu paies 42€ au total (40€ + 2€ de frais). C'est tout — pas de frais cachés.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Que faire en cas de problème pendant le séjour ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">Contacte directement le propriétaire en premier. Si le problème persiste, écris-nous à contact.vanetape@gmail.com. VanEtape est une plateforme de mise en relation — nous ferons notre possible pour faciliter la résolution du litige.</div>
+  </div>
+
+  <div class="section-title">🚐 Pour les propriétaires</div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">C'est gratuit de s'inscrire ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">Oui, l'inscription est totalement gratuite. VanEtape prend uniquement 5% de commission sur chaque réservation confirmée. Si tu ne loues pas, tu ne paies rien.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Combien puis-je gagner par mois ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">Ça dépend de ton tarif et de ta disponibilité. En basse saison, 8 nuits à 29€ = 232€/mois. En haute saison, 15 nuits à 40€ = 600€/mois. Les revenus varient selon le prix fixé et la demande dans ta région.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Mon assurance couvre-t-elle la location ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">C'est une question importante. Avant de proposer ton van, vérifie auprès de ton assureur que ta police couvre la mise à disposition du véhicule à des tiers. Certaines assurances le couvrent, d'autres non. Nous te recommandons également de demander une caution au voyageur (200€ minimum) et de faire un état des lieux avec photos.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Que se passe-t-il en cas de dommage ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">VanEtape est une plateforme de mise en relation entre particuliers et n'est pas responsable des dommages survenus durant la location. En cas de litige, le propriétaire doit se retourner directement vers le voyageur et/ou son assureur. C'est pourquoi nous recommandons fortement la caution et l'état des lieux.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Quand est-ce que je reçois l'argent ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">Le paiement est traité par Stripe. Le virement vers ton compte bancaire est effectué après confirmation de la réservation, selon les délais standard de Stripe (généralement 2-7 jours ouvrés).</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggle(this)">Dois-je avoir un statut légal pour louer mon van ? <span class="faq-arrow">▼</span></div>
+    <div class="faq-answer">Pour des locations occasionnelles, aucun statut n'est obligatoire au départ. Cependant, si tes revenus de location deviennent réguliers, nous te recommandons de créer une auto-entreprise (gratuit sur autoentrepreneur.urssaf.fr, code APE 7990Z) pour être en règle fiscalement.</div>
+  </div>
+
+  <div class="cta">
+    <h3>Tu as encore une question ? 💬</h3>
+    <p>Notre équipe répond à toutes tes questions par email.</p>
+    <a href="mailto:contact.vanetape@gmail.com" class="cta-btn">Nous contacter</a>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 VanEtape — <a href="mentions.html">Mentions légales</a> · <a href="apropos.html">À propos</a>
+</footer>
+
+<script>
+function toggle(el) {
+  var item = el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
