@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VanEscale — Paiement sécurisé</title>
+<title>VanEtape — Paiement sécurisé</title>
 <script src="https://js.stripe.com/v3/"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -172,7 +172,7 @@
 <body>
 
 <nav>
-  <a href="vanescale.html" class="logo">Van<span>Escale</span></a>
+  <a href="/" class="logo">Van<span>Escale</span></a>
   <div class="nav-secure">🔒 Paiement sécurisé par Stripe</div>
 </nav>
 
@@ -219,7 +219,7 @@
     <!-- Paiement Stripe -->
     <div class="card-box">
       <h2>Paiement sécurisé</h2>
-      <p class="subtitle">Vos données bancaires sont chiffrées et traitées par Stripe. VanEscale ne voit jamais votre numéro de carte.</p>
+      <p class="subtitle">Vos données bancaires sont chiffrées et traitées par Stripe. VanEtape ne voit jamais votre numéro de carte.</p>
 
       <div class="stripe-brand-row">
         <div class="stripe-logo">
@@ -280,11 +280,11 @@
       <div class="powered-stripe">
         <span>Propulsé par</span>
         <span class="stripe-badge">stripe</span>
-        <span>— Vos données ne transitent jamais par VanEscale</span>
+        <span>— Vos données ne transitent jamais par VanEtape</span>
       </div>
 
       <p style="text-align:center; font-size:0.75rem; color:#8a9a8e; margin-top:14px; line-height:1.6;">
-        En confirmant, vous acceptez les <a href="#" style="color:var(--fern);">CGU de VanEscale</a>.<br>
+        En confirmant, vous acceptez les <a href="#" style="color:var(--fern);">CGU de VanEtape</a>.<br>
         Le propriétaire est notifié immédiatement après le paiement.
       </p>
     </div>
@@ -299,8 +299,8 @@
         <div class="summary-tag">Van aménagé</div>
       </div>
       <div class="summary-body">
-        <div class="summary-van-name">Volkswagen T6 — Cosy & tout équipé</div>
-        <div class="summary-location">📍 Lyon, Auvergne-Rhône-Alpes · Hôte : Laurent M.</div>
+        <div class="summary-van-name" id="summaryVanName">Volkswagen T6 — Cosy & tout équipé</div>
+        <div class="summary-location" id="summaryLocation">📍 Lyon, Auvergne-Rhône-Alpes · Hôte : Laurent M.</div>
         <div class="summary-dates">
           <div class="date-block"><label>Arrivée</label><span>Jeu. 12 juin 2025</span></div>
           <div class="date-block"><label>Départ</label><span>Ven. 13 juin 2025</span></div>
@@ -309,7 +309,7 @@
         <div class="price-row fee"><span>Frais de service (5%)</span><span>+ 2,50 €</span></div>
         <hr class="summary-divider">
         <div class="price-row total"><span>Total</span><span id="totalVal">52,50 €</span></div>
-        <div class="vanescale-commission">🤝 <strong>5% seulement</strong> — Le propriétaire reçoit <strong>47,50 €</strong></div>
+        <div class="vanescale-commission">🤝 <strong>5% seulement</strong> — Le propriétaire reçoit <strong id="proprietaireReçoit">47,50 €</strong></div>
       </div>
     </div>
 
@@ -353,7 +353,7 @@
       <div class="confirm-row" style="font-weight:600;"><span>Total débité</span><span style="color:var(--forest);">52,50 €</span></div>
     </div>
     <div class="confirm-actions">
-      <a href="vanescale.html" class="btn-confirm-primary">🏠 Retour à l'accueil</a>
+      <a href="/" class="btn-confirm-primary">🏠 Retour à l'accueil</a>
       <button class="btn-confirm-secondary" onclick="window.print()">🖨️ Imprimer le reçu</button>
     </div>
   </div>
@@ -377,11 +377,27 @@ const totalPrix = Math.round((prixNuit + fraisService) * 100) / 100;
 const stripe = Stripe(STRIPE_PUBLIC_KEY);
 // Mettre a jour les prix affiches
 document.addEventListener('DOMContentLoaded', function() {
+  var proprietaire = Math.round(prixNuit * 0.95 * 100) / 100;
   if(document.getElementById('prixNuitLabel')) {
     document.getElementById('prixNuitLabel').textContent = prixNuit.toFixed(2) + ' € x 1 nuit';
+  }
+  if(document.getElementById('prixNuitVal')) {
     document.getElementById('prixNuitVal').textContent = prixNuit.toFixed(2) + ' €';
+  }
+  if(document.getElementById('totalVal')) {
     document.getElementById('totalVal').textContent = totalPrix.toFixed(2) + ' €';
+  }
+  if(document.getElementById('btnText')) {
     document.getElementById('btnText').textContent = '🔒  Payer ' + totalPrix.toFixed(2) + ' € maintenant';
+  }
+  if(document.getElementById('summaryVanName')) {
+    document.getElementById('summaryVanName').textContent = titreVan;
+  }
+  if(document.getElementById('summaryLocation')) {
+    document.getElementById('summaryLocation').textContent = '📍 ' + lieuVan;
+  }
+  if(document.getElementById('proprietaireReçoit')) {
+    document.getElementById('proprietaireReçoit').textContent = proprietaire.toFixed(2) + ' €';
   }
 });
 
@@ -389,7 +405,7 @@ const elements = stripe.elements({
   fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&display=swap' }]
 });
 
-// Style des champs Stripe (s'intègre au design VanEscale)
+// Style des champs Stripe (s'intègre au design VanEtape)
 const stripeStyle = {
   base: {
     fontFamily: 'DM Sans, sans-serif',
@@ -492,6 +508,16 @@ async function handlePayment() {
       btn.classList.remove('loading');
       document.getElementById('spinner').style.display = 'none';
       document.getElementById('btnText').textContent = '🔒  Payer ' + totalPrix.toFixed(2) + ' € maintenant';
+  var proprietaire = Math.round(prixNuit * 0.95 * 100) / 100;
+  if(document.getElementById('summaryVanName')) {
+    document.getElementById('summaryVanName').textContent = titreVan;
+  }
+  if(document.getElementById('summaryLocation')) {
+    document.getElementById('summaryLocation').textContent = '📍 ' + lieuVan;
+  }
+  if(document.getElementById('proprietaireReçoit')) {
+    document.getElementById('proprietaireReçoit').textContent = proprietaire.toFixed(2) + ' €';
+  }
     } else if (paymentIntent.status === 'succeeded') {
       // ✅ Paiement réussi !
       showConfirmation(bookingRef || 'VESC-' + Math.floor(10000 + Math.random() * 90000));
@@ -504,6 +530,16 @@ async function handlePayment() {
     btn.classList.remove('loading');
     document.getElementById('spinner').style.display = 'none';
     document.getElementById('btnText').textContent = '🔒  Payer ' + totalPrix.toFixed(2) + ' € maintenant';
+  var proprietaire = Math.round(prixNuit * 0.95 * 100) / 100;
+  if(document.getElementById('summaryVanName')) {
+    document.getElementById('summaryVanName').textContent = titreVan;
+  }
+  if(document.getElementById('summaryLocation')) {
+    document.getElementById('summaryLocation').textContent = '📍 ' + lieuVan;
+  }
+  if(document.getElementById('proprietaireReçoit')) {
+    document.getElementById('proprietaireReçoit').textContent = proprietaire.toFixed(2) + ' €';
+  }
   }
 }
 
