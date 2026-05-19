@@ -49,10 +49,10 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
 
 <script>
 const vans = [
-  {id:1, title:"Volkswagen T6", location:"Lyon", price:38, img:"images/van1.jpg", type:"van"},
-  {id:2, title:"Fiat Ducato Famille", location:"Bordeaux", price:55, img:"images/van2.jpg", type:"camping"},
-  {id:3, title:"Renault Master Vintage", location:"Marseille", price:29, img:"images/van3.jpg", type:"fourgon"},
-  {id:4, title:"Mercedes Sprinter Luxe", location:"Nice", price:95, img:"images/van4.jpg", type:"luxe"},
+  {id:1, title:"Volkswagen T6 - Cosy et tout équipé", location:"Lyon, Rhone-Alpes", price:38, img:"images/van1.jpg", type:"van"},
+  {id:2, title:"Fiat Ducato Famille", location:"Bordeaux, Nouvelle-Aquitaine", price:55, img:"images/van2.jpg", type:"camping"},
+  {id:3, title:"Renault Master Vintage", location:"Marseille, Provence", price:29, img:"images/van3.jpg", type:"fourgon"},
+  {id:4, title:"Mercedes Sprinter Luxe", location:"Nice, Cote Azur", price:95, img:"images/van4.jpg", type:"luxe"},
 ];
 
 function renderVans(filteredVans) {
@@ -78,7 +78,8 @@ function filter(type) {
 function openDetail(id) {
   const van = vans.find(v => v.id === id);
   if (van) {
-    if (confirm(`Réserver ${van.title} à ${van.price}€ / nuit ?\n\nLieu : ${van.location}`)) {
+    const message = `Van sélectionné :\n\n${van.title}\n📍 ${van.location}\n💰 ${van.price} € / nuit\n\nVoulez-vous continuer vers le paiement ?`;
+    if (confirm(message)) {
       window.location.href = 'paiement.html';
     }
   }
