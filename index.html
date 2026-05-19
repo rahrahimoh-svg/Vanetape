@@ -56,7 +56,7 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
 <body>
 <div id="homePage" class="page active">
 <nav>
-  <div class="logo" onclick="showPage('homePage')">Van<span>Etape</span></div>
+  <div class="logo" onclick="showPage('homePage')">Van<span>Etape</span><div style="font-size:0.55rem;font-weight:400;color:#7a8c7e;letter-spacing:1px;font-family:'DM Sans',sans-serif;margin-top:-4px;">by VanEscale</div></div>
   <button class="nav-btn">Proposer mon van</button>
 </nav>
 
@@ -100,20 +100,20 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
       <div class="pb-row"><span>Frais de service (5%)</span><span id="pbFee">1,90 €</span></div>
       <div class="pb-row total"><span>Total</span><span id="pbTotal">39,90 €</span></div>
     </div>
-    <button class="book-btn" onclick="window.location.href='paiement.html'">Reserver maintenant</button>
+    <button class="book-btn" onclick="window.location.href='paiement.html?prix='+currentVan.price+'&titre='+encodeURIComponent(currentVan.title)+'&lieu='+encodeURIComponent(currentVan.location)">Reserver maintenant</button>
     <p style="text-align:center;font-size:0.75rem;color:#8a9a8e;margin-top:10px;">Aucun debit avant confirmation</p>
   </div>
 </div>
 </div>
 <script>
 var vans=[
-{id:1,img:'images/vanlife/VAN1.jpg',title:'Volkswagen T6 - Cosy et tout equipe',location:'Lyon, Rhone-Alpes',type:'van',price:38,rating:4.9,reviews:42,capacity:2,amenities:['Lit double','Cuisine','Electricite','Douche','WiFi','Panneau solaire','Animaux OK','Climatisation']},
-{id:2,img:'images/vanlife/VAN2.jpg',title:'Camping-car Fiat Ducato - Famille',location:'Bordeaux, Nouvelle-Aquitaine',type:'camping',price:55,rating:4.8,reviews:27,capacity:4,amenities:['2 lits','Cuisine equipee','WC integre','Douche','220V','Frigo','TV','Porte-velos']},
-{id:3,img:'images/vanlife/VAN3.jpg',title:'Renault Master - Vintage et chaleureux',location:'Marseille, Provence',type:'fourgon',price:29,rating:5.0,reviews:18,capacity:2,amenities:['Lit queen','Rechaud gaz','Panneau solaire','Cafe inclus','Deco vintage','Bibliotheque']},
-{id:4,img:'images/vanlife/VAN4.jpg',title:'Mercedes Sprinter - Luxe et confort',location:'Nice, Cote Azur',type:'luxe',price:95,rating:4.9,reviews:31,capacity:2,amenities:['Lit king','Douche chaude','Panneau solaire','Climatisation','WiFi haut debit','Minibar']},
-{id:5,img:'images/vanlife/VAN5.jpg',title:'Ford Transit - Aventurier des cimes',location:'Grenoble, Isere',type:'van',price:42,rating:4.7,reviews:15,capacity:2,amenities:['Lit double','Cuisine','Panneau solaire','Equip montagne','Porte-velos','GPS inclus']},
-{id:6,img:'images/vanlife/VAN6.jpg',title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']},
-{id:7,img:'images/vanlife/VAN7.jpg',title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,amenities:['3 couchages','Glaciere electrique','Proche des plages','Centre-ville Carnon','Proche festivites','Toutes commodites']}
+{id:1,title:'Volkswagen T6 - Cosy et tout equipe',location:'Lyon, Rhone-Alpes',type:'van',price:38,rating:4.9,reviews:42,capacity:2,emoji:'🚐',bg:'#1E3A2F',amenities:['Lit double','Cuisine','Electricite','Douche','WiFi','Panneau solaire','Animaux OK','Climatisation']},
+{id:2,title:'Camping-car Fiat Ducato - Famille',location:'Bordeaux, Nouvelle-Aquitaine',type:'camping',price:55,rating:4.8,reviews:27,capacity:4,emoji:'🏕️',bg:'#2E5C3E',amenities:['2 lits','Cuisine equipee','WC integre','Douche','220V','Frigo','TV','Porte-velos']},
+{id:3,title:'Renault Master - Vintage et chaleureux',location:'Marseille, Provence',type:'fourgon',price:29,rating:5.0,reviews:18,capacity:2,emoji:'🚚',bg:'#4A7C59',amenities:['Lit queen','Rechaud gaz','Panneau solaire','Cafe inclus','Deco vintage','Bibliotheque']},
+{id:4,title:'Mercedes Sprinter - Luxe et confort',location:'Nice, Cote Azur',type:'luxe',price:95,rating:4.9,reviews:31,capacity:2,emoji:'✨',bg:'#C9913A',amenities:['Lit king','Douche chaude','Panneau solaire','Climatisation','WiFi haut debit','Minibar']},
+{id:5,title:'Ford Transit - Aventurier des cimes',location:'Grenoble, Isere',type:'van',price:42,rating:4.7,reviews:15,capacity:2,emoji:'🏔️',bg:'#3D2B1F',amenities:['Lit double','Cuisine','Panneau solaire','Equip montagne','Porte-velos','GPS inclus']},
+{id:6,title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,emoji:'🌿',bg:'#2E5C3E',amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']},
+{id:7,title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,emoji:'🚐',bg:'#1E3A2F',amenities:['3 couchages','Glaciere electrique','Proche des plages','Centre-ville Carnon','Proche festivites','Toutes commodites']}
 ];
 var favs={};
 var currentVan=null;
@@ -125,7 +125,7 @@ function renderGrid(list){
   document.getElementById('count').textContent=list.length+' vans disponibles';
   grid.innerHTML=list.map(function(v){
     return '<div class="card"><div class="card-img" onclick="openDetail('+v.id+')">'+
-    '<div class="card-visual" style="background-image:url('+v.img+');background-size:cover;background-position:center">'+
+    '<div class="card-visual" style="background:'+v.bg+'"><div class="card-emoji">'+v.emoji+'</div>'+
     '<div class="card-loc" style="color:rgba(255,255,255,0.8)">'+v.location+'</div></div>'+
     '<div class="card-badge">'+getType(v.type)+'</div>'+
     '<button class="card-fav" onclick="event.stopPropagation();toggleFav('+v.id+',this)">'+(favs[v.id]?'❤️':'🤍')+'</button>'+
