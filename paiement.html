@@ -299,8 +299,8 @@
         <div class="summary-tag">Van aménagé</div>
       </div>
       <div class="summary-body">
-        <div class="summary-van-name">Volkswagen T6 — Cosy & tout équipé</div>
-        <div class="summary-location">📍 Lyon, Auvergne-Rhône-Alpes · Hôte : Laurent M.</div>
+        <div class="summary-van-name" id="summaryVanName">Volkswagen T6 — Cosy & tout équipé</div>
+        <div class="summary-location" id="summaryLocation">📍 Lyon, Auvergne-Rhône-Alpes · Hôte : Laurent M.</div>
         <div class="summary-dates">
           <div class="date-block"><label>Arrivée</label><span>Jeu. 12 juin 2025</span></div>
           <div class="date-block"><label>Départ</label><span>Ven. 13 juin 2025</span></div>
@@ -383,6 +383,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('totalVal').textContent = totalPrix.toFixed(2) + ' €';
     document.getElementById('btnText').textContent = '🔒  Payer ' + totalPrix.toFixed(2) + ' € maintenant';
   var proprietaire = Math.round(prixNuit * 0.95 * 100) / 100;
+  if(document.getElementById('summaryVanName')) {
+    document.getElementById('summaryVanName').textContent = titreVan;
+  }
+  if(document.getElementById('summaryLocation')) {
+    document.getElementById('summaryLocation').textContent = '📍 ' + lieuVan;
+  }
   if(document.getElementById('proprietaireReçoit')) {
     document.getElementById('proprietaireReçoit').textContent = proprietaire.toFixed(2) + ' €';
   }
@@ -497,6 +503,12 @@ async function handlePayment() {
       document.getElementById('spinner').style.display = 'none';
       document.getElementById('btnText').textContent = '🔒  Payer ' + totalPrix.toFixed(2) + ' € maintenant';
   var proprietaire = Math.round(prixNuit * 0.95 * 100) / 100;
+  if(document.getElementById('summaryVanName')) {
+    document.getElementById('summaryVanName').textContent = titreVan;
+  }
+  if(document.getElementById('summaryLocation')) {
+    document.getElementById('summaryLocation').textContent = '📍 ' + lieuVan;
+  }
   if(document.getElementById('proprietaireReçoit')) {
     document.getElementById('proprietaireReçoit').textContent = proprietaire.toFixed(2) + ' €';
   }
@@ -513,6 +525,12 @@ async function handlePayment() {
     document.getElementById('spinner').style.display = 'none';
     document.getElementById('btnText').textContent = '🔒  Payer ' + totalPrix.toFixed(2) + ' € maintenant';
   var proprietaire = Math.round(prixNuit * 0.95 * 100) / 100;
+  if(document.getElementById('summaryVanName')) {
+    document.getElementById('summaryVanName').textContent = titreVan;
+  }
+  if(document.getElementById('summaryLocation')) {
+    document.getElementById('summaryLocation').textContent = '📍 ' + lieuVan;
+  }
   if(document.getElementById('proprietaireReçoit')) {
     document.getElementById('proprietaireReçoit').textContent = proprietaire.toFixed(2) + ' €';
   }
