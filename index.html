@@ -15,19 +15,21 @@ nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px 
 .chip{padding:8px 16px;border-radius:50px;border:1.5px solid var(--fog);background:white;cursor:pointer;white-space:nowrap;font-size:0.85rem;}
 .chip.active{background:var(--forest);color:white;border-color:var(--forest);}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;padding:20px;}
-.card{border-radius:16px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.1);background:white;}
+.card{border-radius:16px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.1);background:white;cursor:pointer;transition:transform 0.2s;}
+.card:hover{transform:scale(1.03);}
 .card img{width:100%;height:220px;object-fit:cover;}
 .card-body{padding:14px;}
 .card-title{font-weight:600;margin-bottom:4px;}
 .card-location{color:#666;font-size:0.9rem;margin-bottom:8px;}
 .card-price{font-size:1.1rem;font-weight:700;color:var(--gold);}
+.proposer-btn{background:linear-gradient(135deg,#C9913A,#E8B55A);color:white;border:none;padding:14px 28px;border-radius:50px;font-size:1.05rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(201,145,58,0.4);}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="logo">Van<span>Etape</span></div>
-  <button onclick="window.location.href='proposer.html'" style="background:var(--gold);color:white;border:none;padding:10px 20px;border-radius:50px;cursor:pointer;">Proposer mon van</button>
+  <button onclick="window.location.href='proposer.html'" class="proposer-btn">🚐 Proposer mon van gratuitement</button>
 </nav>
 
 <!-- INTRO -->
@@ -56,7 +58,7 @@ const vans = [
 function renderVans(filteredVans) {
   const grid = document.getElementById('grid');
   grid.innerHTML = filteredVans.map(v => `
-    <div class="card" onclick="alert('Détail du van : ${v.title}')">
+    <div class="card" onclick="openDetail(${v.id})">
       <img src="${v.img}" alt="${v.title}">
       <div class="card-body">
         <div class="card-title">${v.title}</div>
@@ -69,10 +71,16 @@ function renderVans(filteredVans) {
 
 function filter(type) {
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  if (type === 'all') {
-    renderVans(vans);
-  } else {
-    renderVans(vans.filter(v => v.type === type));
+  if (type === 'all') renderVans(vans);
+  else renderVans(vans.filter(v => v.type === type));
+}
+
+function openDetail(id) {
+  const van = vans.find(v => v.id === id);
+  if (van) {
+    if (confirm(`Réserver ${van.title} à ${van.price}€ / nuit ?\n\nLieu : ${van.location}`)) {
+      window.location.href = 'paiement.html';
+    }
   }
 }
 
