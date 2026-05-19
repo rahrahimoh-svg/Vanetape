@@ -2,25 +2,82 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>VanEtape</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VanEtape - Hébergement van et camping-car</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-body{font-family:sans-serif;margin:0;padding:20px;background:#f8f5f0;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;}
-.card{border-radius:16px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.1);background:white;}
-.card img{width:100%;height:200px;object-fit:cover;}
+:root{--forest:#1E3A2F;--gold:#C9913A;--white:#FDFAF4;--bark:#3D2B1F;--fog:#D4CCBC;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--bark);}
+nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:1px solid var(--fog);padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--gold);}
+.filter-bar{display:flex;gap:8px;padding:12px 20px;border-bottom:1px solid var(--fog);overflow-x:auto;}
+.chip{padding:8px 16px;border-radius:50px;border:1.5px solid var(--fog);background:white;cursor:pointer;white-space:nowrap;font-size:0.85rem;}
+.chip.active{background:var(--forest);color:white;border-color:var(--forest);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;padding:20px;}
+.card{border-radius:16px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.1);background:white;}
+.card img{width:100%;height:220px;object-fit:cover;}
+.card-body{padding:14px;}
+.card-title{font-weight:600;margin-bottom:4px;}
+.card-location{color:#666;font-size:0.9rem;margin-bottom:8px;}
+.card-price{font-size:1.1rem;font-weight:700;color:var(--gold);}
 </style>
 </head>
 <body>
 
-<h1>VanEtape</h1>
+<nav>
+  <div class="logo">Van<span>Etape</span></div>
+  <button onclick="window.location.href='proposer.html'" style="background:var(--gold);color:white;border:none;padding:10px 20px;border-radius:50px;cursor:pointer;">Proposer mon van</button>
+</nav>
 
-<div class="grid">
-  <div class="card"><img src="images/van1.jpg"><div style="padding:12px;"><b>Volkswagen T6</b><br>Lyon — 38€</div></div>
-  <div class="card"><img src="images/van2.jpg"><div style="padding:12px;"><b>Fiat Ducato</b><br>Bordeaux — 55€</div></div>
-  <div class="card"><img src="images/van3.jpg"><div style="padding:12px;"><b>Renault Master</b><br>Marseille — 29€</div></div>
-  <div class="card"><img src="images/van4.jpg"><div style="padding:12px;"><b>Mercedes Sprinter</b><br>Nice — 95€</div></div>
+<!-- INTRO -->
+<div style="background:#0d1f17;padding:40px 20px;text-align:center;color:#FDFAF4;">
+  <a href="https://www.VanEtape.fr" target="_blank"><img src="pub2.jpg" style="max-width:560px;width:100%;border-radius:20px;margin-bottom:20px;box-shadow:0 15px 35px rgba(0,0,0,0.4);"></a>
+  <a href="https://www.VanEtape.fr" target="_blank"><img src="pub1.jpg" style="max-width:560px;width:100%;border-radius:20px;box-shadow:0 15px 35px rgba(0,0,0,0.4);"></a>
 </div>
+
+<div class="filter-bar">
+  <div class="chip active" onclick="filter('all')">🚐 Tous</div>
+  <div class="chip" onclick="filter('van')">🚌 Vans</div>
+  <div class="chip" onclick="filter('camping')">🏕️ Camping-cars</div>
+  <div class="chip" onclick="filter('fourgon')">🚚 Fourgons</div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const vans = [
+  {id:1, title:"Volkswagen T6", location:"Lyon", price:38, img:"images/van1.jpg", type:"van"},
+  {id:2, title:"Fiat Ducato Famille", location:"Bordeaux", price:55, img:"images/van2.jpg", type:"camping"},
+  {id:3, title:"Renault Master Vintage", location:"Marseille", price:29, img:"images/van3.jpg", type:"fourgon"},
+  {id:4, title:"Mercedes Sprinter Luxe", location:"Nice", price:95, img:"images/van4.jpg", type:"luxe"},
+];
+
+function renderVans(filteredVans) {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = filteredVans.map(v => `
+    <div class="card" onclick="alert('Détail du van : ${v.title}')">
+      <img src="${v.img}" alt="${v.title}">
+      <div class="card-body">
+        <div class="card-title">${v.title}</div>
+        <div class="card-location">📍 ${v.location}</div>
+        <div class="card-price">${v.price} € / nuit</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filter(type) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  if (type === 'all') {
+    renderVans(vans);
+  } else {
+    renderVans(vans.filter(v => v.type === type));
+  }
+}
+
+renderVans(vans);
+</script>
 
 </body>
 </html>
