@@ -81,6 +81,67 @@ function googleTranslateElementInit() {
   </div>
 </nav>
 
+<!-- BARRE DE RECHERCHE -->
+<div style="background:white;padding:20px 24px;border-bottom:1px solid #D4CCBC;box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+  <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+
+    <!-- Localisation -->
+    <div style="flex:1;min-width:140px;background:#F5EFE0;border-radius:12px;padding:10px 14px;">
+      <div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">📍 Où ?</div>
+      <input type="text" placeholder="Ville, région..." id="searchLieu" style="border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:#3D2B1F;width:100%;outline:none;">
+    </div>
+
+    <!-- Date arrivée -->
+    <div style="flex:1;min-width:130px;background:#F5EFE0;border-radius:12px;padding:10px 14px;">
+      <div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">📅 Arrivée</div>
+      <input type="date" id="dateArrivee" style="border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:#3D2B1F;width:100%;outline:none;">
+    </div>
+
+    <!-- Date départ -->
+    <div style="flex:1;min-width:130px;background:#F5EFE0;border-radius:12px;padding:10px 14px;">
+      <div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">📅 Départ</div>
+      <input type="date" id="dateDepart" style="border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:#3D2B1F;width:100%;outline:none;">
+    </div>
+
+    <!-- Voyageurs -->
+    <div style="flex:1;min-width:130px;background:#F5EFE0;border-radius:12px;padding:10px 14px;">
+      <div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">👥 Voyageurs</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <select id="nbAdultes" style="border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:#3D2B1F;outline:none;">
+          <option value="1">1 adulte</option>
+          <option value="2">2 adultes</option>
+          <option value="3">3 adultes</option>
+          <option value="4">4 adultes</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Enfants -->
+    <div style="flex:1;min-width:110px;background:#F5EFE0;border-radius:12px;padding:10px 14px;">
+      <div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">👶 Enfants</div>
+      <select id="nbEnfants" style="border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:#3D2B1F;outline:none;">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+
+    <!-- Animaux -->
+    <div style="flex:1;min-width:110px;background:#F5EFE0;border-radius:12px;padding:10px 14px;">
+      <div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">🐾 Animaux</div>
+      <select id="animaux" style="border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:#3D2B1F;outline:none;">
+        <option value="non">Non</option>
+        <option value="oui">Oui</option>
+      </select>
+    </div>
+
+    <!-- Bouton recherche -->
+    <button onclick="rechercherVans()" style="background:linear-gradient(135deg,#C9913A,#E8B55A);color:white;border:none;padding:12px 24px;border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;">🔍 Rechercher</button>
+
+  </div>
+</div>
+
 <div style="background:#0d1f17;padding:40px 20px;text-align:center;">
   <img src="pub2.jpg" alt="Marre des hotels" style="width:100%;max-width:560px;border-radius:16px;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,0.4);">
   <img src="pub1.jpg" alt="Ton van dort dans ton garage" style="width:100%;max-width:560px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.4);">
@@ -234,6 +295,26 @@ function openDetail(id){
   showPage('detailPage');
 }
 renderGrid(vans);
+
+function rechercherVans() {
+  var lieu = document.getElementById('searchLieu').value.toLowerCase();
+  var animaux = document.getElementById('animaux').value;
+  var adultes = parseInt(document.getElementById('nbAdultes').value);
+
+  var filtered = vans.filter(function(v) {
+    var lieuOk = lieu === '' || v.location.toLowerCase().includes(lieu);
+    var animauxOk = animaux === 'non' || v.amenities.join(' ').toLowerCase().includes('animaux');
+    var capaciteOk = v.capacity >= adultes;
+    return lieuOk && animauxOk && capaciteOk;
+  });
+
+  if(filtered.length === 0) {
+    document.getElementById('count').textContent = 'Aucun van trouvé pour ces critères';
+    document.getElementById('grid').innerHTML = '<div style="text-align:center;padding:40px;color:#7a8c7e;grid-column:1/-1;">😔 Aucun van disponible pour ces critères. Essaie avec d'autres dates ou une autre ville.</div>';
+  } else {
+    renderGrid(filtered);
+  }
+}
 </script>
 </body>
 </html>
