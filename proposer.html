@@ -427,14 +427,33 @@ function submitForm() {
   btn.disabled = true;
   btn.textContent = 'Envoi en cours...';
 
-  // Simulation envoi (2 secondes)
-  setTimeout(function() {
-    var ref = 'VAN-' + Math.floor(10000 + Math.random() * 90000);
-    document.getElementById('confRef').textContent = ref;
-    document.getElementById('formWrapper').style.display = 'none';
-    document.getElementById('confirmation').style.display = 'block';
-    window.scrollTo(0, 0);
-  }, 2000);
+  // Envoi vers Formspree
+  var ref = 'VAN-' + Math.floor(10000 + Math.random() * 90000);
+  fetch('https://formspree.io/f/xojrbbzy', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify({
+      prenom: prenom, nom: nom, email: email, tel: tel,
+      type: type, modele: modele, ville: ville,
+      description: description, prix: prix,
+      reference: ref
+    })
+  }).then(function(r) {
+    if(r.ok) {
+      document.getElementById('confRef').textContent = ref;
+      document.getElementById('formWrapper').style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
+      window.scrollTo(0, 0);
+    } else {
+      alert('Erreur lors de l'envoi. Réessayez ou contactez contact.vanetape@gmail.com');
+      btn.disabled = false;
+      btn.textContent = '🚐 Inscrire mon van gratuitement';
+    }
+  }).catch(function() {
+    alert('Erreur de connexion. Réessayez ou contactez contact.vanetape@gmail.com');
+    btn.disabled = false;
+    btn.textContent = '🚐 Inscrire mon van gratuitement';
+  });
 }
 </script>
 
