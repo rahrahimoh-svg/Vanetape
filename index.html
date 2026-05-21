@@ -160,6 +160,10 @@ function googleTranslateElementInit() {
     <span class="detail-stat">📍 <span id="detailLocation"></span></span>
     <span class="detail-stat">🛌 <span id="detailCapacity"></span> pers.</span>
   </div>
+  <div id="detailDescription" style="display:none;background:#F5EFE0;border-radius:14px;padding:20px;margin-bottom:20px;border:1px solid #D4CCBC;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#1E3A2F;margin-bottom:10px;">📝 Description du propriétaire</h3>
+    <p class="desc-text" style="font-size:0.9rem;color:#4a5a4e;line-height:1.8;"></p>
+  </div>
   <div class="amenities">
     <h3>Equipements</h3>
     <div class="amenity-grid" id="amenityGrid"></div>
@@ -238,7 +242,7 @@ var vans=[
   {id:6,img:'images/vanlife/VAN6.jpg',title:'Citroen Jumper - Nature et serenite',location:'Nantes, Pays de la Loire',type:'fourgon',price:33,rating:4.8,reviews:22,capacity:2,amenities:['Lit double','Solaire','Cuisine','Animaux bienvenus','Deco artisanale','Cafe inclus']},
   {id:7,img:'images/vanlife/VAN7.jpg',title:'Peugeot Boxer - Van amenage proche plages',location:'Montpellier, Herault',type:'van',price:40,rating:5.0,reviews:1,capacity:3,amenities:['3 couchages','Glaciere electrique','Proche des plages','Centre-ville Carnon','Proche festivites','Toutes commodites']}
 ,
-  {id:8,img:'images/vanlife/VAN7.jpg',title:'Trafic 1995 - Van authentique',location:'Montpellier, Herault',type:'van',price:29,rating:5.0,reviews:0,capacity:2,amenities:['Batterie externe','Prise telephone','Couchage double','Acces facile','Stationnement inclus','Contact proprietaire'],description:'Je propose mon van à la location pour dépanner quelques nuits. Pas de sanitaire ni cuisine. Batterie externe disponible pour recharger vos téléphones. Pour plus d infos et photos contactez-moi directement.'}
+  {id:8,img:'images/vanlife/VAN7.jpg',title:'Trafic 1995 - Van authentique',location:'Montpellier, Herault',type:'van',price:29,rating:5.0,reviews:0,capacity:2,amenities:['Batterie externe','Prise telephone','Couchage double','Acces facile','Stationnement inclus','Contact proprietaire']}
 ];
 var currentVan=null;
 function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
@@ -276,6 +280,16 @@ function openDetail(id){
   document.getElementById('pbFee').textContent=fee.toFixed(2)+' €';
   document.getElementById('pbTotal').textContent=total.toFixed(2)+' €';
   document.getElementById('amenityGrid').innerHTML=v.amenities.map(function(a){return '<div class="amenity-item">✓ '+a+'</div>';}).join('');
+  // Afficher description du propriétaire
+  var descEl = document.getElementById('detailDescription');
+  if(descEl) {
+    if(v.description) {
+      descEl.style.display='block';
+      descEl.querySelector('.desc-text').textContent = v.description;
+    } else {
+      descEl.style.display='none';
+    }
+  }
   document.getElementById('bookBtn').onclick=function(){
     window.location.href='paiement.html?prix='+v.price+'&titre='+encodeURIComponent(v.title)+'&lieu='+encodeURIComponent(v.location);
   };
