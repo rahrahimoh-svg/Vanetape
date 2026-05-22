@@ -277,7 +277,7 @@ function openDetail(id){
   document.getElementById('pbBase').textContent=v.price+' €';
   document.getElementById('pbFee').textContent=fee.toFixed(2)+' €';
   document.getElementById('pbTotal').textContent=total.toFixed(2)+' €';
-  var amenEl=document.querySelector('.amenities');if(v.amenities.length===0){amenEl.style.display='none';}else{amenEl.style.display='';document.getElementById('amenityGrid').innerHTML=v.amenities.map(function(a){return '<div class="amenity-item">✓ '+a+'</div>';}).join('');}
+  document.getElementById('amenityGrid').innerHTML=v.amenities.map(function(a){return '<div class="amenity-item">✓ '+a+'</div>';}).join('');
   // Afficher description du propriétaire
   var descEl = document.getElementById('detailDescription');
   if(descEl) {
