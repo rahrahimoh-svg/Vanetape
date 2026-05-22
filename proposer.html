@@ -262,19 +262,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   <!-- 3. Équipements -->
   <div class="form-card">
     <div class="section-title">⚙️ Équipements disponibles</div>
-    <div class="equip-grid">
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">🛏️</span>Lit double</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">🍳</span>Cuisine</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">🚿</span>Douche</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">🚽</span>WC</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">⚡</span>Électricité</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">🌞</span>Panneau solaire</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">📶</span>WiFi</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">❄️</span>Climatisation</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">🐕</span>Animaux OK</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">🚲</span>Porte-vélos</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">☕</span>Café inclus</button>
-      <button class="equip-btn" onclick="toggleEquip(this)"><span class="eq-icon">📺</span>TV</button>
+    <div class="form-group">
+      <label for="equipements">Listez vos équipements</label>
+      <textarea id="equipements" name="equipements" rows="4" placeholder="Ex : Lit double, Panneau solaire, Cuisine, WiFi..." style="width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--fog);font-family:'DM Sans',sans-serif;font-size:0.9rem;resize:vertical;"></textarea>
+      <div style="font-size:0.78rem;color:#7a8c7e;margin-top:6px;">Décrivez uniquement ce qui est réellement disponible dans votre van.</div>
     </div>
   </div>
 
