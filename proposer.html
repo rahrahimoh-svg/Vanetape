@@ -270,8 +270,15 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   <!-- 4. Photos -->
   <div class="form-card">
     <div class="section-title">📸 Photos de votre van</div>
-    <div class="photo-zone" onclick="document.getElementById('photoInput').click()">
-      <div class="pz-icon">📷</div>
+    <div style="background:#F5EFE0;border-radius:12px;padding:20px;border:1.5px solid #D4CCBC;">
+      <div style="font-size:0.9rem;color:#3D2B1F;margin-bottom:12px;">📷 <strong>1 photo principale</strong> — choisissez la meilleure vue de votre van.</div>
+      <input type="file" id="photoInput" accept="image/*" style="font-family:'DM Sans',sans-serif;font-size:0.85rem;width:100%;">
+      <div style="margin-top:16px;padding:14px;background:white;border-radius:10px;border:1.5px solid #D4CCBC;">
+        <div style="font-size:0.85rem;color:#1E3A2F;font-weight:600;margin-bottom:6px;">📸 Photos supplémentaires</div>
+        <div style="font-size:0.82rem;color:#5a6b5e;line-height:1.6;">Les autres photos seront échangées directement avec le voyageur après confirmation de paiement. Vous pouvez aussi les envoyer à <a href="mailto:contact.vanetape@gmail.com" style="color:#C9913A;">contact.vanetape@gmail.com</a> — elles seront ajoutées à votre annonce sous 24h.</div>
+      </div>
+    </div>
+    <div style="display:none">📷
       <p><strong>Cliquez pour ajouter des photos</strong></p>
       <p>ou glissez-déposez vos images ici</p>
       <p style="margin-top:8px;font-size:0.75rem;color:#aaa;">JPG, PNG — Max 5 photos — 5MB par photo</p>
