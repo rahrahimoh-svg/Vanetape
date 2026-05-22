@@ -267,8 +267,8 @@ function openDetail(id){
   document.getElementById('detailHero').src=v.img;
   document.getElementById('detailHero').alt=v.title;
   document.getElementById('detailTitle').textContent=v.title;
-  document.getElementById('detailSub').textContent=getType(v.type)+' · '+v.location+' · ★ '+v.rating+' ('+v.reviews+' avis)';
-  document.getElementById('detailRating').textContent=v.rating+' ('+v.reviews+' avis)';
+  document.getElementById('detailSub').textContent=getType(v.type)+' · '+v.location;
+  document.getElementById('detailRating').textContent='';
   document.getElementById('detailLocation').textContent=v.location;
   document.getElementById('detailCapacity').textContent=v.capacity;
   document.getElementById('widgetPrice').textContent=v.price;
