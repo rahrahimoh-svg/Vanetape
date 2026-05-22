@@ -164,7 +164,7 @@ function googleTranslateElementInit() {
     <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#1E3A2F;margin-bottom:10px;">📝 Description du propriétaire</h3>
     <p class="desc-text" style="font-size:0.9rem;color:#4a5a4e;line-height:1.8;"></p>
   </div>
-  <div class="amenities" id="amenitiesSection">
+  <div class="amenities">
     <h3>Equipements</h3>
     <div class="amenity-grid" id="amenityGrid"></div>
   </div>
@@ -277,7 +277,7 @@ function openDetail(id){
   document.getElementById('pbBase').textContent=v.price+' €';
   document.getElementById('pbFee').textContent=fee.toFixed(2)+' €';
   document.getElementById('pbTotal').textContent=total.toFixed(2)+' €';
-  if(v.amenities.length===0){document.getElementById('amenitiesSection').style.display='none';}else{document.getElementById('amenitiesSection').style.display='';if(v.amenities.length===0){document.getElementById('amenitiesSection').style.display='none';}else{document.getElementById('amenitiesSection').style.display='';document.getElementById('amenityGrid').innerHTML=v.amenities.map(function(a){return '<div class="amenity-item">✓ '+a+'</div>';}).join('');}}
+  document.getElementById('amenityGrid').innerHTML=v.amenities.map(function(a){return '<div class="amenity-item">✓ '+a+'</div>';}).join('');
   // Afficher description du propriétaire
   var descEl = document.getElementById('detailDescription');
   if(descEl) {
