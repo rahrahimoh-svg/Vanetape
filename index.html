@@ -169,7 +169,7 @@ function googleTranslateElementInit() {
     <div class="amenity-grid" id="amenityGrid"></div>
   </div>
   <div class="book-widget">
-    <div style="display:flex;gap:10px;margin-bottom:16px;"><div style="flex:1;background:#F5EFE0;border-radius:10px;padding:10px 12px;"><div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">📅 Arrivée</div><input type="date" id="widgetArrivee" style="border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.85rem;width:100%;outline:none;" onchange="calcTotal()"></div><div style="flex:1;background:#F5EFE0;border-radius:10px;padding:10px 12px;"><div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">📅 Départ</div><input type="date" id="widgetDepart" style="border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:0.85rem;width:100%;outline:none;" onchange="calcTotal()"></div></div><div class="widget-price"><span id="widgetPrice"></span> € <span style="font-size:0.9rem;font-weight:400;color:#7a8c7e;">/ nuit</span></div>
+    <div class="widget-price"><span id="widgetPrice"></span> € <span style="font-size:0.9rem;font-weight:400;color:#7a8c7e;">/ nuit</span></div>
     <div class="price-breakdown">
       <div class="pb-row"><span id="pbNights"></span><span id="pbBase"></span></div>
       <div class="pb-row"><span>Frais de service (5%)</span><span id="pbFee"></span></div>
@@ -293,19 +293,6 @@ function openDetail(id){
     window.location.href='paiement.html?prix='+v.price+'&titre='+encodeURIComponent(v.title)+'&lieu='+encodeURIComponent(v.location);
   };
   showPage('detailPage');
-}
-function calcTotal(){
-  var prix=currentVan?currentVan.price:0;
-  var a=document.getElementById('widgetArrivee').value;
-  var d=document.getElementById('widgetDepart').value;
-  var nuits=1;
-  if(a&&d){var diff=new Date(d)-new Date(a);nuits=Math.max(1,Math.round(diff/86400000));}
-  var fee=Math.round(prix*nuits*0.05*100)/100;
-  var total=Math.round((prix*nuits+fee)*100)/100;
-  document.getElementById('pbNights').textContent=prix+' x '+nuits+' nuit'+(nuits>1?'s':'');
-  document.getElementById('pbBase').textContent=(prix*nuits)+' €';
-  document.getElementById('pbFee').textContent=fee.toFixed(2)+' €';
-  document.getElementById('pbTotal').textContent=total.toFixed(2)+' €';
 }
 renderGrid(vans);
 
