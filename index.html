@@ -172,7 +172,11 @@ function googleTranslateElementInit() {
     <div class="amenity-grid" id="amenityGrid"></div>
   </div>
   <div class="book-widget">
-    <div class="widget-price"><span id="widgetPrice"></span> € <span style="font-size:0.9rem;font-weight:400;color:#7a8c7e;">/ nuit</span></div>
+    <div style="display:flex;gap:10px;margin-bottom:16px;">
+<div style="flex:1;background:#F5EFE0;border-radius:10px;padding:10px 12px;"><div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">📅 Arrivée</div><input type="date" id="bkArrivee" onchange="majTotal()" style="border:none;background:transparent;font-family:inherit;font-size:0.85rem;width:100%;outline:none;"></div>
+<div style="flex:1;background:#F5EFE0;border-radius:10px;padding:10px 12px;"><div style="font-size:0.7rem;font-weight:600;color:#1E3A2F;margin-bottom:4px;">📅 Départ</div><input type="date" id="bkDepart" onchange="majTotal()" style="border:none;background:transparent;font-family:inherit;font-size:0.85rem;width:100%;outline:none;"></div>
+</div>
+<div class="widget-price"><span id="widgetPrice"></span> € <span style="font-size:0.9rem;font-weight:400;color:#7a8c7e;">/ nuit</span></div>
     <div class="price-breakdown">
       <div class="pb-row"><span id="pbNights"></span><span id="pbBase"></span></div>
       <div class="pb-row"><span>Frais de service (5%)</span><span id="pbFee"></span></div>
@@ -263,6 +267,27 @@ function renderGrid(list){
       +'</div></div>';
   }).join('');}
 function filterVans(chip,type){document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('active');});chip.classList.add('active');renderGrid(type==='all'?vans:vans.filter(function(v){return v.type===type;}));}
+function majTotal(){
+  if(!currentVan)return;
+  var a=document.getElementById("bkArrivee").value;
+  var d=document.getElementById("bkDepart").value;
+  var nuits=1;
+  if(a&&d){var diff=Math.round((new Date(d)-new Date(a))/86400000);if(diff>=1)nuits=diff;}
+  var base=Math.round(currentVan.price*nuits*100)/100;
+  var fee=Math.round(base*0.05*100)/100;
+  var total=Math.round((base+fee)*100)/100;
+  document.getElementById("pbNights").textContent=currentVan.price+" x "+nuits+" nuit"+(nuits>1?"s":"");
+  document.getElementById("pbBase").textContent=base+" €";
+  document.getElementById("pbFee").textContent=fee.toFixed(2)+" €";
+  document.getElementById("pbTotal").textContent=total.toFixed(2)+" €";
+}
+function prefillDates(){
+  var today=new Date().toISOString().slice(0,10);
+  var a=document.getElementById("bkArrivee"),d=document.getElementById("bkDepart");
+  a.min=today;d.min=today;
+  a.value=document.getElementById("dateArrivee").value;
+  d.value=document.getElementById("dateDepart").value;
+}
 function openDetail(id){
   currentVan=vans.find(function(v){return v.id===id;});
   var v=currentVan;
@@ -293,9 +318,9 @@ function openDetail(id){
     }
   }
   document.getElementById('bookBtn').onclick=function(){
-    window.location.href='paiement.html?prix='+v.price+'&titre='+encodeURIComponent(v.title)+'&lieu='+encodeURIComponent(v.location);
+    var a=document.getElementById('bkArrivee').value,d=document.getElementById('bkDepart').value;if(!a||!d||new Date(d)<=new Date(a)){alert('Choisissez vos dates : arrivée et départ, minimum 1 nuit.');return;}window.location.href='paiement.html?prix='+v.price+'&titre='+encodeURIComponent(v.title)+'&lieu='+encodeURIComponent(v.location)+'&arrivee='+a+'&depart='+d;
   };
-  showPage('detailPage');
+  prefillDates();majTotal();showPage('detailPage');
 }
 renderGrid(vans);
 
